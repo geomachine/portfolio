@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fdfdfd;
+  --foreground: #080808;
+  --sidebar-bg: #fdfdfd;
+  --card-bg: #fdfdfd;
+  --card-border: #080808;
+  --accent: #080808;
+  --accent-hover: #333333;
+  --border: #080808;
+  --text-muted: #555555;
+
+  /* Keep variable for backwards compatibility if needed, but we use Tailwind config now */
+  --ff-poppins: var(--font-space-mono);
+}
+
+[data-theme='dark'] {
+  --background: #080808;
+  --foreground: #fdfdfd;
+  --sidebar-bg: #080808;
+  --card-bg: #080808;
+  --card-border: #fdfdfd;
+  --accent: #fdfdfd;
+  --accent-hover: #cccccc;
+  --border: #fdfdfd;
+  --text-muted: #aaaaaa;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-sidebar: var(--sidebar-bg);
+  --color-card: var(--card-bg);
+  --color-card-border: var(--card-border);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-border: var(--border);
+  --color-muted: var(--text-muted);
+  --font-mono: var(--font-space-mono);
+  --font-signature: var(--font-caveat);
+}
+
+@utility sketch-border {
+  border-width: 2px;
+  border-style: dashed;
+  border-color: var(--card-border);
+}
+
+
+/* Custom Utilities that can't easily be inline */
+@utility scrollbar-hide {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+@utility custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--background);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--accent);
+  }
+}
