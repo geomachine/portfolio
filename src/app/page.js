@@ -13,7 +13,7 @@ export default function PortfolioPage() {
     switch (activePage) {
       case "about":
         return (
-          <article className="active bg-card sketch-border p-[15px] lg:p-[30px] transition-all duration-500 relative z-10 block animate-[fadeIn_0.5s_ease_forwards]">
+          <article className="active bg-card sketch-border paper-pattern p-[15px] lg:p-[30px] transition-all duration-500 relative z-10 block animate-[fadeIn_0.5s_ease_forwards]">
             <header>
               <h2 className="text-[40px] font-signature font-bold capitalize mb-[20px] relative pb-[10px] text-foreground flex items-center gap-4">
                 About me
@@ -45,12 +45,12 @@ export default function PortfolioPage() {
                   { title: "Mobile apps", text: "Professional development of applications for iOS and Android.", icon: "📱" },
                   { title: "Photography", text: "I make high-quality photos of any category at a professional level.", icon: "📷" }
                 ].map((s, idx) => (
-                  <li key={idx} className="bg-card p-[20px] sketch-border flex items-start flex-col gap-[15px] hover:translate-x-1 hover:translate-y-1 transition-all duration-300 group relative">
+                  <li key={idx} className="bg-card p-[20px] sketch-border flex items-start flex-col gap-[15px] hover:translate-x-1 hover:translate-y-1 transition-all duration-300 group relative hover:border-accent-secondary">
                     <div className="text-4xl text-foreground flex-shrink-0 bg-transparent w-12 h-12 flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-500">
                       {s.icon}
                     </div>
                     <div className="service-content-box">
-                      <h4 className="font-signature font-bold text-2xl text-foreground mb-2">{s.title}</h4>
+                      <h4 className="font-signature font-bold text-2xl text-foreground mb-2 group-hover:text-accent-secondary transition-colors">{s.title}</h4>
                       <p className="text-[14px] text-muted leading-relaxed font-light">{s.text}</p>
                     </div>
                   </li>
@@ -67,7 +67,7 @@ export default function PortfolioPage() {
                   { name: "Daniel Lewis", text: "Richard was hired to create a corporate identity. We were very pleased with the work...", avatar: "👨‍💻" },
                   { name: "Jessica Miller", text: "Richard was hired to create a corporate identity. We were very pleased with the work...", avatar: "👩‍💼" }
                 ].map((t, i) => (
-                  <li key={i} className="flex-shrink-0 w-full md:w-[48%] bg-card sketch-border p-[20px] relative snap-center duration-300">
+                  <li key={i} className="flex-shrink-0 w-full md:w-[48%] bg-card sketch-border p-[20px] relative snap-center duration-300 hover:border-accent">
                     <div className="flex items-center gap-4 mb-4 relative z-10">
                       <div className="w-12 h-12 sketch-border bg-card flex flex-shrink-0 items-center justify-center text-2xl grayscale">
                         {t.avatar}
@@ -97,7 +97,7 @@ export default function PortfolioPage() {
         );
       case "resume":
         return (
-          <article className="active bg-card sketch-border p-[15px] lg:p-[30px] transition-all duration-500 relative z-10 block animate-[fadeIn_0.5s_ease_forwards]">
+          <article className="active bg-card sketch-border paper-pattern p-[15px] lg:p-[30px] transition-all duration-500 relative z-10 block animate-[fadeIn_0.5s_ease_forwards]">
             <header>
               <h2 className="text-[40px] font-signature font-bold capitalize mb-[20px] relative pb-[10px] text-foreground flex items-center gap-4">
                 Resume
@@ -167,10 +167,10 @@ export default function PortfolioPage() {
                   <li key={idx}>
                     <div className="flex items-center justify-between mb-2">
                       <h5 className="font-bold text-foreground font-signature text-xl uppercase tracking-wider">{skill.title}</h5>
-                      <span className="text-foreground font-bold">{skill.value}%</span>
+                      <span className="text-foreground font-bold bg-accent-tertiary px-2 sketch-border">{skill.value}%</span>
                     </div>
                     <div className="bg-background border-2 border-foreground h-4 w-full sketch-border overflow-hidden flex p-[2px]">
-                      <div className="bg-foreground h-full transition-all duration-1000 relative" style={{ width: `${skill.value}%` }}>
+                      <div className="bg-accent h-full transition-all duration-1000 relative" style={{ width: `${skill.value}%` }}>
                       </div>
                     </div>
                   </li>
@@ -194,7 +194,7 @@ export default function PortfolioPage() {
         const filteredProjects = portfolioFilter === "All" ? projects : projects.filter(p => p.category === portfolioFilter);
 
         return (
-          <article className="active bg-card sketch-border p-[15px] lg:p-[30px] transition-all duration-500 relative z-10 block animate-[fadeIn_0.5s_ease_forwards]">
+          <article className="active bg-card sketch-border paper-pattern p-[15px] lg:p-[30px] transition-all duration-500 relative z-10 block animate-[fadeIn_0.5s_ease_forwards]">
             <header>
               <h2 className="text-[40px] font-signature font-bold capitalize mb-[20px] relative pb-[10px] text-foreground flex items-center gap-4">
                 Portfolio
@@ -221,7 +221,7 @@ export default function PortfolioPage() {
                   <li key={idx} className="group cursor-pointer">
                     <figure className="relative sketch-border overflow-hidden mb-4 aspect-[4/3] bg-card p-1 group-hover:translate-x-1 group-hover:translate-y-1 transition-all duration-300 grayscale group-hover:grayscale-0">
                       <div className="absolute inset-0 bg-background/50 z-10 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-                        <div className="p-3 bg-foreground text-background sketch-border translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                        <div className="p-3 bg-accent-tertiary text-foreground sketch-border translate-y-4 group-hover:translate-y-0 transition-all duration-300">
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
                             <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -249,7 +249,7 @@ export default function PortfolioPage() {
         ];
 
         return (
-          <article className="active bg-card sketch-border p-[15px] lg:p-[30px] transition-all duration-500 relative z-10 block animate-[fadeIn_0.5s_ease_forwards]">
+          <article className="active bg-card sketch-border paper-pattern p-[15px] lg:p-[30px] transition-all duration-500 relative z-10 block animate-[fadeIn_0.5s_ease_forwards]">
             <header>
               <h2 className="text-[40px] font-signature font-bold capitalize mb-[20px] relative pb-[10px] text-foreground flex items-center gap-4">
                 Blog
@@ -282,7 +282,7 @@ export default function PortfolioPage() {
         );
       case "contact":
         return (
-          <article className="active bg-card sketch-border p-[15px] lg:p-[30px] transition-all duration-500 relative z-10 block animate-[fadeIn_0.5s_ease_forwards]">
+          <article className="active bg-card sketch-border paper-pattern p-[15px] lg:p-[30px] transition-all duration-500 relative z-10 block animate-[fadeIn_0.5s_ease_forwards]">
             <header>
               <h2 className="text-[40px] font-signature font-bold capitalize mb-[20px] relative pb-[10px] text-foreground flex items-center gap-4">
                 Contact
@@ -315,7 +315,7 @@ export default function PortfolioPage() {
                   <textarea name="message" className="w-full bg-background border-[2px] border-foreground sketch-border px-4 py-4 text-[16px] text-foreground outline-none focus:bg-foreground focus:text-background transition-all min-h-[120px] placeholder:text-muted hover:translate-x-[2px] hover:translate-y-[2px] resize-none" placeholder="Your Message" required></textarea>
                 </div>
                 <div className="flex justify-end mt-4">
-                  <button className="bg-foreground text-background py-3 px-8 sketch-border font-signature font-bold text-2xl flex items-center gap-3 transition-all duration-300 hover:-translate-y-1 active:scale-95 group hover:bg-background hover:text-foreground" type="submit">
+                  <button className="bg-accent-tertiary text-foreground py-3 px-8 sketch-border font-signature font-bold text-2xl flex items-center gap-3 transition-all duration-300 hover:-translate-y-1 active:scale-95 group hover:bg-background hover:text-foreground" type="submit">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
                     </svg>

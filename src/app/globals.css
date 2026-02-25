@@ -1,30 +1,46 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fdfdfd;
-  --foreground: #080808;
-  --sidebar-bg: #fdfdfd;
-  --card-bg: #fdfdfd;
-  --card-border: #080808;
-  --accent: #080808;
+  --background: #f4f1ea;
+  /* Warm Parchment */
+  --foreground: #1a1a1a;
+  /* Deep Charcoal */
+  --sidebar-bg: #f4f1ea;
+  --card-bg: #fcfaf5;
+  --card-border: #1a1a1a;
+  --accent: #d62828;
+  /* Vibrant Retro Red */
+  --accent-secondary: #0077b6;
+  /* Vibrant Retro Blue */
+  --accent-tertiary: #fca311;
+  /* Vibrant Retro Gold */
   --accent-hover: #333333;
-  --border: #080808;
-  --text-muted: #555555;
+  --border: #1a1a1a;
+  --text-muted: #4a4a4a;
+  --paper-texture: radial-gradient(#d1c7a3 0.8px, transparent 0.8px);
 
   /* Keep variable for backwards compatibility if needed, but we use Tailwind config now */
   --ff-poppins: var(--font-space-mono);
 }
 
 [data-theme='dark'] {
-  --background: #080808;
-  --foreground: #fdfdfd;
-  --sidebar-bg: #080808;
-  --card-bg: #080808;
-  --card-border: #fdfdfd;
-  --accent: #fdfdfd;
-  --accent-hover: #cccccc;
-  --border: #fdfdfd;
-  --text-muted: #aaaaaa;
+  --background: #0d1b2a;
+  /* Deep Vintage Midnight */
+  --foreground: #e0e1dd;
+  /* Off-white */
+  --sidebar-bg: #0d1b2a;
+  --card-bg: #1b263b;
+  --card-border: #e0e1dd;
+  --accent: #ef233c;
+  /* Lighter Vibrant Red */
+  --accent-secondary: #48cae4;
+  /* Vibrant Light Blue */
+  --accent-tertiary: #ffb703;
+  /* Vibrant Gold */
+  --accent-hover: #f1faee;
+  --border: #e0e1dd;
+  --text-muted: #90e0ef;
+  --paper-texture: radial-gradient(#1b263b 0.8px, transparent 0.8px);
 }
 
 @theme inline {
@@ -34,12 +50,38 @@
   --color-card: var(--card-bg);
   --color-card-border: var(--card-border);
   --color-accent: var(--accent);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-accent-tertiary: var(--accent-tertiary);
   --color-accent-hover: var(--accent-hover);
   --color-border: var(--border);
   --color-muted: var(--text-muted);
   --font-mono: var(--font-space-mono);
   --font-signature: var(--font-caveat);
 }
+
+
+
+@utility paper-pattern {
+  background-image: var(--paper-texture);
+  background-size: 20px 20px;
+}
+
+@utility highlight-yellow {
+  background-color: var(--accent);
+  color: #000;
+  padding: 0 4px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+@utility highlight-cyan {
+  background-color: var(--accent-secondary);
+  color: #000;
+  padding: 0 4px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
 
 @utility sketch-border {
   border-width: 2px;

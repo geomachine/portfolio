@@ -11,7 +11,7 @@ export function Navbar({ activePage, setActivePage }) {
                     return (
                         <li key={item} className="relative">
                             <button
-                                className={`relative z-10 py-3 px-3 lg:py-4 lg:px-6 text-[18px] lg:text-[22px] font-signature font-bold transition-all duration-300 block ${isActive ? 'text-background bg-foreground sketch-border translate-y-[-2px]' : 'text-muted hover:text-foreground'}`}
+                                className={`relative z-10 py-3 px-3 lg:py-4 lg:px-6 text-[18px] lg:text-[22px] font-signature font-bold transition-all duration-300 block ${isActive ? 'text-background bg-accent-secondary sketch-border translate-y-[-2px]' : 'text-muted hover:text-foreground'}`}
                                 onClick={() => setActivePage(item.toLowerCase())}
                             >
                                 {item}

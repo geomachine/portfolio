@@ -6,17 +6,17 @@ export function Sidebar() {
     const [isActive, setIsActive] = useState(false);
 
     return (
-        <aside className={`bg-sidebar border-2 border-card-border sketch-border p-4 lg:p-6 transition-[max-height] duration-500 ease-in-out relative z-10 lg:sticky lg:top-[60px] lg:mb-0 lg:w-[280px] lg:shrink-0 lg:!max-h-none lg:overflow-visible overflow-hidden ${isActive ? 'max-h-[800px]' : 'max-h-[110px]'}`}>
+        <aside className={`bg-sidebar border-2 border-card-border sketch-border paper-pattern p-4 lg:p-6 transition-[max-height] duration-500 ease-in-out relative z-10 lg:sticky lg:top-[60px] lg:mb-0 lg:w-[280px] lg:shrink-0 lg:!max-h-none lg:overflow-visible overflow-hidden ${isActive ? 'max-h-[800px]' : 'max-h-[110px]'}`}>
             <div className="sidebar-info flex items-center gap-[20px] relative lg:block lg:text-center">
                 <div className="relative w-[70px] h-[70px] lg:w-[130px] lg:h-[130px] lg:mx-auto">
-                    <figure className="relative bg-card sketch-border w-full h-full overflow-hidden flex items-center justify-center p-1 z-10 group cursor-pointer grayscale group-hover:grayscale-0 transition-all duration-300">
+                    <figure className="relative bg-card sketch-border w-full h-full overflow-hidden flex items-center justify-center p-1 z-10 group cursor-pointer grayscale group-hover:grayscale-0 transition-all duration-300 group-hover:border-accent">
                         <img src="/old/assets/images/my-avatar.png" alt="Richard hanrick" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out" />
                     </figure>
                 </div>
 
                 <div className="info-content lg:mt-5 text-left lg:text-center">
                     <h1 className="name text-xl lg:text-3xl font-signature font-bold tracking-tight text-foreground mb-1" title="Richard hanrick">Richard hanrick</h1>
-                    <p className="title bg-card text-[11px] lg:text-[12px] text-muted font-bold px-3 py-1 sketch-border w-fit lg:mx-auto tracking-wide">Web developer</p>
+                    <p className="title bg-accent text-[11px] lg:text-[12px] text-foreground font-bold px-3 py-1 sketch-border w-fit lg:mx-auto tracking-wide uppercase">Web developer</p>
                 </div>
 
                 <button
@@ -38,7 +38,7 @@ export function Sidebar() {
                         { title: "Location", value: "Sacramento, California, USA", icon: "📍" }
                     ].map((contact, idx) => (
                         <li key={idx} className="contact-item flex items-center gap-3 group cursor-pointer">
-                            <div className="w-[40px] h-[40px] flex-shrink-0 text-foreground text-lg bg-card sketch-border grayscale group-hover:grayscale-0 flex justify-center items-center group-hover:bg-foreground group-hover:text-background transition-all duration-300">
+                            <div className="w-[40px] h-[40px] flex-shrink-0 text-foreground text-lg bg-card sketch-border grayscale group-hover:grayscale-0 flex justify-center items-center group-hover:bg-accent-tertiary group-hover:text-foreground transition-all duration-300">
                                 {contact.icon}
                             </div>
                             <div className="contact-info text-left overflow-hidden">
