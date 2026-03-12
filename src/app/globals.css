@@ -1,46 +1,128 @@
 @import "tailwindcss";
 
-:root {
-  --background: #f4f1ea;
-  /* Warm Parchment */
-  --foreground: #1a1a1a;
-  /* Deep Charcoal */
-  --sidebar-bg: #f4f1ea;
-  --card-bg: #fcfaf5;
-  --card-border: #1a1a1a;
-  --accent: #d62828;
-  /* Vibrant Retro Red */
-  --accent-secondary: #0077b6;
-  /* Vibrant Retro Blue */
-  --accent-tertiary: #fca311;
-  /* Vibrant Retro Gold */
-  --accent-hover: #333333;
-  --border: #1a1a1a;
-  --text-muted: #4a4a4a;
-  --paper-texture: radial-gradient(#d1c7a3 0.8px, transparent 0.8px);
+/* ============================================
+   SMOOTH THEME TRANSITIONS
+   ============================================ */
+* {
+  transition: 
+    background-color 500ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 500ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 500ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-  /* Keep variable for backwards compatibility if needed, but we use Tailwind config now */
-  --ff-poppins: var(--font-space-mono);
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================
+   COLOR SYSTEM
+   ============================================ */
+
+:root {
+  /* Font Families */
+  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  --font-signature: var(--font-caveat);
+
+  /* Monochromatic Light Theme - Professional Gray Scale */
+  --background: #FFFFFF;
+  --foreground: #0A0A0A;           /* Pure black - Maximum contrast */
+  --sidebar-bg: #FAFAFA;
+  --card-bg: #FFFFFF;
+  --card-border: #0A0A0A;
+
+  /* Primary - Charcoal (main interactive elements) */
+  --primary: #171717;              /* Dark gray - Professional */
+  --primary-hover: #0A0A0A;        /* Darker on hover */
+  --primary-light: #F5F5F5;        /* Light gray backgrounds */
+
+  /* Secondary - Medium Gray (subtle accents) */
+  --secondary: #404040;            /* Medium gray */
+  --secondary-hover: #262626;      /* Darker on hover */
+  --secondary-light: #E5E5E5;      /* Light gray */
+
+  /* Tertiary - Accent Gray (highlights) */
+  --tertiary: #525252;             /* Neutral gray for CTAs */
+  --tertiary-hover: #404040;       /* Darker on hover */
+  --tertiary-light: #D4D4D4;       /* Light neutral */
+
+  /* Neutrals - Text hierarchy */
+  --text-primary: #0A0A0A;         /* Main text - Pure black */
+  --text-secondary: #525252;       /* Secondary text - Medium gray */
+  --text-tertiary: #A3A3A3;        /* Tertiary text - Light gray */
+  --border: #E5E5E5;
+  --border-strong: #D4D4D4;
+
+  /* Semantic Colors - Subtle */
+  --success: #404040;
+  --error: #525252;
+  --warning: #737373;
+
+  /* Legacy aliases for backwards compatibility */
+  --accent: var(--primary);
+  --accent-secondary: var(--secondary);
+  --accent-tertiary: var(--tertiary);
+  --accent-hover: var(--primary-hover);
+  --text-muted: var(--text-secondary);
+
+  /* Paper texture for sketch aesthetic */
+  --paper-texture: radial-gradient(#E5E5E5 0.8px, transparent 0.8px);
 }
 
 [data-theme='dark'] {
-  --background: #0d1b2a;
-  /* Deep Vintage Midnight */
-  --foreground: #e0e1dd;
-  /* Off-white */
-  --sidebar-bg: #0d1b2a;
-  --card-bg: #1b263b;
-  --card-border: #e0e1dd;
-  --accent: #ef233c;
-  /* Lighter Vibrant Red */
-  --accent-secondary: #48cae4;
-  /* Vibrant Light Blue */
-  --accent-tertiary: #ffb703;
-  /* Vibrant Gold */
-  --accent-hover: #f1faee;
-  --border: #e0e1dd;
-  --text-muted: #90e0ef;
-  --paper-texture: radial-gradient(#1b263b 0.8px, transparent 0.8px);
+  /* Monochromatic Dark Theme - Professional Gray Scale */
+  --background: #0A0A0A;
+  --foreground: #FAFAFA;           /* Off-white - Strong contrast */
+  --sidebar-bg: #171717;
+  --card-bg: #171717;
+  --card-border: #FAFAFA;
+
+  /* Primary - Light Gray (main interactive elements) */
+  --primary: #E5E5E5;              /* Light gray - Clean */
+  --primary-hover: #FAFAFA;        /* Brighter on hover */
+  --primary-light: #262626;        /* Dark gray backgrounds */
+
+  /* Secondary - Medium Gray (subtle accents) */
+  --secondary: #A3A3A3;            /* Medium gray */
+  --secondary-hover: #D4D4D4;      /* Lighter on hover */
+  --secondary-light: #404040;      /* Dark gray */
+
+  /* Tertiary - Accent Gray (highlights) */
+  --tertiary: #D4D4D4;             /* Light gray for CTAs */
+  --tertiary-hover: #E5E5E5;       /* Lighter on hover */
+  --tertiary-light: #525252;       /* Medium dark */
+
+  /* Neutrals - Text hierarchy */
+  --text-primary: #FAFAFA;         /* Main text - Off-white */
+  --text-secondary: #A3A3A3;       /* Secondary text - Medium gray */
+  --text-tertiary: #737373;        /* Tertiary text - Darker gray */
+  --border: #262626;
+  --border-strong: #404040;
+
+  /* Semantic Colors - Subtle */
+  --success: #D4D4D4;
+  --error: #A3A3A3;
+  --warning: #737373;
+
+  /* Legacy aliases for backwards compatibility */
+  --accent: var(--primary);
+  --accent-secondary: var(--secondary);
+  --accent-tertiary: var(--tertiary);
+  --accent-hover: var(--primary-hover);
+  --text-muted: var(--text-secondary);
+
+  /* Paper texture for sketch aesthetic */
+  --paper-texture: radial-gradient(#262626 0.8px, transparent 0.8px);
 }
 
 @theme inline {
@@ -49,12 +131,40 @@
   --color-sidebar: var(--sidebar-bg);
   --color-card: var(--card-bg);
   --color-card-border: var(--card-border);
+  
+  /* New color tokens */
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-light: var(--primary-light);
+  --color-secondary: var(--secondary);
+  --color-secondary-hover: var(--secondary-hover);
+  --color-secondary-light: var(--secondary-light);
+  --color-tertiary: var(--tertiary);
+  --color-tertiary-hover: var(--tertiary-hover);
+  --color-tertiary-light: var(--tertiary-light);
+  
+  /* Text colors */
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+  
+  /* Borders */
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  
+  /* Semantic */
+  --color-success: var(--success);
+  --color-error: var(--error);
+  --color-warning: var(--warning);
+  
+  /* Legacy aliases */
   --color-accent: var(--accent);
   --color-accent-secondary: var(--accent-secondary);
   --color-accent-tertiary: var(--accent-tertiary);
   --color-accent-hover: var(--accent-hover);
-  --color-border: var(--border);
   --color-muted: var(--text-muted);
+  
+  /* Fonts */
   --font-mono: var(--font-space-mono);
   --font-signature: var(--font-caveat);
 }
@@ -104,7 +214,7 @@
 
 @utility custom-scrollbar {
   &::-webkit-scrollbar {
-    width: 5px;
+    width: 8px;
   }
 
   &::-webkit-scrollbar-track {
@@ -112,6 +222,11 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background: var(--accent);
+    background: var(--border-strong);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--foreground);
   }
 }

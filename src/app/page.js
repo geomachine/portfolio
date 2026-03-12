@@ -46,12 +46,12 @@ export default function PortfolioPage() {
                   { title: "Mobile apps", text: "Professional development of applications for iOS and Android.", icon: <Smartphone size={32} /> },
                   { title: "Photography", text: "I make high-quality photos of any category at a professional level.", icon: <Camera size={32} /> }
                 ].map((s, idx) => (
-                  <li key={idx} className="bg-card p-[20px] sketch-border flex items-start flex-col gap-[15px] hover:translate-x-1 hover:translate-y-1 transition-all duration-300 group relative hover:border-accent-secondary">
-                    <div className="text-4xl text-foreground flex-shrink-0 bg-transparent w-12 h-12 flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-500">
+                  <li key={idx} className="bg-card p-[20px] sketch-border flex items-start flex-col gap-[15px] hover:translate-x-1 hover:translate-y-1 transition-all duration-300 group relative hover:bg-primary-light">
+                    <div className="text-4xl text-foreground shrink-0 bg-transparent w-12 h-12 flex items-center justify-center transition-all duration-500 group-hover:scale-110">
                       {s.icon}
                     </div>
                     <div className="service-content-box">
-                      <h4 className="font-signature font-bold text-2xl text-foreground mb-2 group-hover:text-accent-secondary transition-colors">{s.title}</h4>
+                      <h4 className="font-signature font-bold text-2xl text-foreground mb-2">{s.title}</h4>
                       <p className="text-[14px] text-muted leading-relaxed font-light">{s.text}</p>
                     </div>
                   </li>
@@ -68,7 +68,7 @@ export default function PortfolioPage() {
                   { name: "Daniel Lewis", text: "Richard was hired to create a corporate identity. We were very pleased with the work...", avatar: <User size={24} /> },
                   { name: "Jessica Miller", text: "Richard was hired to create a corporate identity. We were very pleased with the work...", avatar: <User size={24} /> }
                 ].map((t, i) => (
-                  <li key={i} className="flex-shrink-0 w-full md:w-[48%] bg-card sketch-border p-[20px] relative snap-center duration-300 hover:border-accent">
+                  <li key={i} className="shrink-0 w-full md:w-[48%] bg-card sketch-border p-[20px] relative snap-center duration-300 hover:bg-primary-light">
                     <div className="flex items-center gap-4 mb-4 relative z-10">
                       <div className="w-12 h-12 sketch-border bg-card flex flex-shrink-0 items-center justify-center text-2xl grayscale">
                         {t.avatar}
@@ -168,10 +168,10 @@ export default function PortfolioPage() {
                   <li key={idx}>
                     <div className="flex items-center justify-between mb-2">
                       <h5 className="font-bold text-foreground font-signature text-xl uppercase tracking-wider">{skill.title}</h5>
-                      <span className="text-foreground font-bold bg-accent-tertiary px-2 sketch-border">{skill.value}%</span>
+                      <span className="text-foreground font-bold bg-primary text-white px-3 py-1 sketch-border">{skill.value}%</span>
                     </div>
                     <div className="bg-background border-2 border-foreground h-4 w-full sketch-border overflow-hidden flex p-[2px]">
-                      <div className="bg-accent h-full transition-all duration-1000 relative" style={{ width: `${skill.value}%` }}>
+                      <div className="bg-foreground h-full transition-all duration-1000 relative" style={{ width: `${skill.value}%` }}>
                       </div>
                     </div>
                   </li>
@@ -204,12 +204,12 @@ export default function PortfolioPage() {
             </header>
 
             <section className="projects">
-              <ul className="flex gap-4 md:gap-8 mb-8 overflow-x-auto pb-4 scrollbar-hide border-b-[2px] border-foreground border-dashed">
+              <ul className="flex gap-4 md:gap-8 mb-8 overflow-x-auto pb-4 scrollbar-hide border-b-2 border-foreground border-dashed">
                 {["All", "Web design", "Applications", "Web development"].map(f => (
-                  <li key={f} className="flex-shrink-0">
+                  <li key={f} className="shrink-0">
                     <button
                       onClick={() => setPortfolioFilter(f)}
-                      className={`text-[18px] font-signature font-bold pb-2 border-b-[3px] transition-all duration-300 ${portfolioFilter === f ? 'text-foreground border-foreground' : 'text-muted border-transparent hover:text-foreground hover:border-border'}`}
+                      className={`text-[18px] font-signature font-bold pb-2 border-b-[3px] transition-all duration-300 ${portfolioFilter === f ? 'text-foreground border-foreground scale-105' : 'text-muted border-transparent hover:text-foreground hover:border-border hover:scale-102'}`}
                     >
                       {f}
                     </button>
@@ -220,9 +220,9 @@ export default function PortfolioPage() {
               <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredProjects.map((project, idx) => (
                   <li key={idx} className="group cursor-pointer">
-                    <figure className="relative sketch-border overflow-hidden mb-4 aspect-[4/3] bg-card p-1 group-hover:translate-x-1 group-hover:translate-y-1 transition-all duration-300 grayscale group-hover:grayscale-0">
+                    <figure className="relative sketch-border overflow-hidden mb-4 aspect-4/3 bg-card p-1 group-hover:translate-x-1 group-hover:translate-y-1 transition-all duration-300 grayscale group-hover:grayscale-0 group-hover:bg-primary-light">
                       <div className="absolute inset-0 bg-background/50 z-10 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-                        <div className="p-3 bg-accent-tertiary text-foreground sketch-border translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                        <div className="p-3 bg-foreground text-background sketch-border translate-y-4 group-hover:translate-y-0 transition-all duration-300">
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
                             <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -262,7 +262,7 @@ export default function PortfolioPage() {
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {blogs.map((blog, idx) => (
                   <li key={idx} className="group">
-                    <a href="#" className="block w-full h-full bg-card sketch-border overflow-hidden hover:translate-x-1 hover:translate-y-1 transition-all duration-300">
+                    <a href="#" className="block w-full h-full bg-card sketch-border overflow-hidden hover:translate-x-1 hover:translate-y-1 transition-all duration-300 hover:bg-primary-light">
                       <figure className="relative overflow-hidden aspect-[1.8/1] border-b-2 border-foreground grayscale group-hover:grayscale-0 transition-all duration-500">
                         <img src={blog.img} alt={blog.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
                         <div className="absolute top-4 left-4 z-20 flex items-center gap-2 bg-foreground px-3 py-1 sketch-border text-[12px] font-bold text-background">
@@ -306,17 +306,17 @@ export default function PortfolioPage() {
               <form action="#" className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="relative group">
-                    <input type="text" name="fullname" className="w-full bg-background border-[2px] border-foreground sketch-border px-4 py-3 text-[16px] text-foreground outline-none focus:bg-foreground focus:text-background transition-all placeholder:text-muted hover:translate-x-[2px] hover:translate-y-[2px]" placeholder="Full name" required />
+                    <input type="text" name="fullname" className="w-full bg-background border-2 border-foreground sketch-border px-4 py-3 text-[16px] text-foreground outline-none focus:bg-primary-light transition-all placeholder:text-muted hover:translate-x-[2px] hover:translate-y-[2px] focus:ring-2 focus:ring-foreground focus:ring-offset-2" placeholder="Full name" required />
                   </div>
                   <div className="relative group">
-                    <input type="email" name="email" className="w-full bg-background border-[2px] border-foreground sketch-border px-4 py-3 text-[16px] text-foreground outline-none focus:bg-foreground focus:text-background transition-all placeholder:text-muted hover:translate-x-[2px] hover:translate-y-[2px]" placeholder="Email address" required />
+                    <input type="email" name="email" className="w-full bg-background border-2 border-foreground sketch-border px-4 py-3 text-[16px] text-foreground outline-none focus:bg-primary-light transition-all placeholder:text-muted hover:translate-x-[2px] hover:translate-y-[2px] focus:ring-2 focus:ring-foreground focus:ring-offset-2" placeholder="Email address" required />
                   </div>
                 </div>
                 <div className="relative group">
-                  <textarea name="message" className="w-full bg-background border-[2px] border-foreground sketch-border px-4 py-4 text-[16px] text-foreground outline-none focus:bg-foreground focus:text-background transition-all min-h-[120px] placeholder:text-muted hover:translate-x-[2px] hover:translate-y-[2px] resize-none" placeholder="Your Message" required></textarea>
+                  <textarea name="message" className="w-full bg-background border-2 border-foreground sketch-border px-4 py-4 text-[16px] text-foreground outline-none focus:bg-primary-light transition-all min-h-[120px] placeholder:text-muted hover:translate-x-[2px] hover:translate-y-[2px] resize-none focus:ring-2 focus:ring-foreground focus:ring-offset-2" placeholder="Your Message" required></textarea>
                 </div>
                 <div className="flex justify-end mt-4">
-                  <button className="bg-accent-tertiary text-foreground py-3 px-8 sketch-border font-signature font-bold text-2xl flex items-center gap-3 transition-all duration-300 hover:-translate-y-1 active:scale-95 group hover:bg-background hover:text-foreground" type="submit">
+                  <button className="bg-foreground text-background py-3 px-8 sketch-border font-signature font-bold text-2xl flex items-center gap-3 transition-all duration-300 hover:-translate-y-1 hover:scale-105 active:scale-95 group hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-foreground focus:ring-offset-2 focus:ring-offset-background" type="submit">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
                     </svg>
@@ -333,9 +333,9 @@ export default function PortfolioPage() {
   };
 
   return (
-    <main className="w-full max-w-[1200px] mt-[30px] mx-auto flex flex-col gap-5 relative pb-[110px] lg:flex-row lg:items-stretch lg:mt-[60px] lg:pb-0 lg:gap-[25px]">
+    <main className="w-full max-w-[1200px] mt-[30px] mx-auto flex flex-col gap-5 relative pb-[110px] lg:flex-row lg:items-start lg:mt-[60px] lg:pb-[60px] lg:gap-[25px]">
       <Sidebar />
-      <div className="flex-1 w-full relative">
+      <div className="flex-1 w-full relative min-h-0">
         <Navbar activePage={activePage} setActivePage={setActivePage} />
         {renderSection()}
       </div>
