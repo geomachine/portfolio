@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react';
 import { Plus, Loader2, GripVertical } from 'lucide-react';
 import { Table, Modal, ConfirmDialog, Btn, Field, Input, Textarea, Badge, useToast } from '@/components/admin/ui';
-import { useForm } from 'react-hook-form';
+import { ImageUpload } from '@/components/admin/ImageUpload';
+import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -21,7 +22,7 @@ const schema = z.object({
 function ProjectModal({ open, onClose, selected, onSaved, toast }) {
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState('');
-  const { register, handleSubmit, reset, formState: { errors } } = useForm({ resolver: zodResolver(schema) });
+  const { register, handleSubmit, reset, control, formState: { errors } } = useForm({ resolver: zodResolver(schema) });
 
   useEffect(() => {
     if (open) {
@@ -69,8 +70,14 @@ function ProjectModal({ open, onClose, selected, onSaved, toast }) {
             <Input {...register('order')} type="number" placeholder="0" />
           </Field>
         </div>
-        <Field label="Image URL">
-          <Input {...register('img')} placeholder="/images/project.jpg or https://..." />
+        <Field label="Image">
+          <Controller
+            name="img"
+            control={control}
+            render={({ field }) => (
+              <ImageUpload value={field.value} onChange={field.onChange} folder="projects" />
+            )}
+          />
         </Field>
         <Field label="Project Link">
           <Input {...register('link')} placeholder="https://github.com/..." />

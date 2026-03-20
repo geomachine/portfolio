@@ -3,7 +3,8 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Plus, Loader2 } from 'lucide-react';
 import { Table, Modal, ConfirmDialog, Btn, Field, Input, Textarea, SearchInput, Pagination, Badge, useToast } from '@/components/admin/ui';
-import { useForm } from 'react-hook-form';
+import { ImageUpload } from '@/components/admin/ImageUpload';
+import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -19,7 +20,7 @@ const schema = z.object({
 function BlogModal({ open, onClose, selected, onSaved, toast }) {
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState('');
-  const { register, handleSubmit, reset, formState: { errors } } = useForm({ resolver: zodResolver(schema) });
+  const { register, handleSubmit, reset, control, formState: { errors } } = useForm({ resolver: zodResolver(schema) });
 
   useEffect(() => {
     if (open) {
@@ -64,14 +65,20 @@ function BlogModal({ open, onClose, selected, onSaved, toast }) {
             <Input {...register('tags')} placeholder="tag1, tag2, tag3" />
           </Field>
         </div>
-        <Field label="Cover Image URL">
-          <Input {...register('image')} placeholder="https://... or /images/..." />
+        <Field label="Cover Image">
+          <Controller
+            name="image"
+            control={control}
+            render={({ field }) => (
+              <ImageUpload value={field.value} onChange={field.onChange} folder="blogs" />
+            )}
+          />
         </Field>
         <Field label="Excerpt" error={errors.excerpt?.message} required>
           <Textarea {...register('excerpt')} rows={2} placeholder="Short summary shown on the blog list" />
         </Field>
         <Field label="Content" error={errors.content?.message} required>
-          <Textarea {...register('content')} rows={10} placeholder="Full blog content (Markdown or HTML)..." />
+          <Textarea {...register('content')} rows={10} placeholder="Full blog content..." />
         </Field>
         {apiError && <p className="text-xs text-red-500 bg-red-500/10 px-3 py-2">{apiError}</p>}
         <div className="flex justify-end gap-3 pt-2 border-t border-dashed border-card-border">
@@ -142,7 +149,18 @@ export default function AdminBlogsPage() {
   };
 
   const columns = [
-    { header: 'Title', key: 'title', render: (v) => <span className="font-bold">{v}</span> },
+    {
+      header: 'Title', key: 'title',
+      render: (v, row) => (
+        <div className="flex items-center gap-3">
+          {row.image
+            ? <img src={row.image} alt={v} className="w-10 h-8 object-cover border border-card-border shrink-0" />
+            : <div className="w-10 h-8 border border-card-border bg-primary-light shrink-0" />
+          }
+          <span className="font-bold">{v}</span>
+        </div>
+      ),
+    },
     { header: 'Category', key: 'category', render: (v) => <Badge>{v}</Badge> },
     { header: 'Tags', key: 'tags', render: (v) => v?.length ? v.slice(0, 3).map(t => <Badge key={t} className="mr-1">{t}</Badge>) : '—' },
     { header: 'Date', key: 'createdAt', render: (v) => v ? new Date(v).toLocaleDateString() : '—' },
