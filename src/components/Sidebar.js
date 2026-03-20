@@ -80,10 +80,10 @@ export function Sidebar() {
         </div>
 
         <div className="info-content lg:mt-5 text-left lg:text-center">
-          <h1 className="name text-xl lg:text-3xl font-signature font-bold tracking-tight text-foreground mb-1" title={data.name}>
+          <h1 className="name text-2xl lg:text-4xl font-signature font-bold tracking-tight text-foreground mb-1" title={data.name}>
             {data.name}
           </h1>
-          <p className="title bg-foreground text-background text-[11px] lg:text-[12px] font-bold px-3 py-1 sketch-border w-fit lg:mx-auto tracking-wide uppercase">
+          <p className="title bg-foreground text-background text-[9px] lg:text-[10px] font-bold px-3 py-1 sketch-border w-fit lg:mx-auto tracking-wide uppercase">
             {data.title}
           </p>
         </div>
