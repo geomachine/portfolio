@@ -1,6 +1,6 @@
 {
   "name": "scratch",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "port": 3000,
   "scripts": {
