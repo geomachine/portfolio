@@ -176,27 +176,33 @@ export default function PortfolioPage() {
               <h3 className="text-3xl lg:text-4xl font-signature font-bold mb-6 text-foreground flex items-center gap-3">
                 <span className="text-foreground text-2xl">✦</span> My skills
               </h3>
-              <ul className="bg-card p-6 sketch-border space-y-6">
+              <div className="space-y-4">
                 {[
-                  { title: "Golang", value: 90 },
-                  { title: "Kubernetes & Docker", value: 88 },
-                  { title: "Terraform / IaC", value: 82 },
-                  { title: "TypeScript", value: 80 },
-                  { title: "AWS & Cloud", value: 78 },
-                  { title: "Observability", value: 85 },
-                ].map((skill, idx) => (
-                  <li key={idx}>
-                    <div className="flex items-center justify-between mb-2">
-                      <h5 className="font-bold text-foreground font-signature text-xl uppercase tracking-wider">{skill.title}</h5>
-                      <span className="text-foreground font-bold bg-primary text-background px-3 py-1 sketch-border">{skill.value}%</span>
+                  { category: "Languages", tags: ["Golang", "TypeScript", "Python", "Bash"] },
+                  { category: "Containers & Orchestration", tags: ["Docker", "Kubernetes", "K3s", "Helm", "EKS", "Kustomization"] },
+                  { category: "Infrastructure & IaC", tags: ["Terraform", "AWS CDK", "Load Balancing", "Infrastructure Automation"] },
+                  { category: "Cloud Platforms", tags: ["AWS", "DigitalOcean", "Hetzner", "EC2", "S3", "Route53", "Lambda"] },
+                  { category: "CI/CD & DevOps", tags: ["GitHub Actions", "Jenkins", "GitLab CI"] },
+                  { category: "Observability", tags: ["Prometheus", "Grafana", "Alerting", "Metrics Collection"] },
+                  { category: "Databases & Caching", tags: ["PostgreSQL", "MySQL", "MongoDB", "Redis", "ElasticSearch"] },
+                  { category: "Networking", tags: ["Caddy", "Nginx", "Tailscale", "Headscale", "TLS/SSL"] },
+                  { category: "Frontend", tags: ["React.js", "Next.js", "Tailwind CSS"] },
+                ].map((group, idx) => (
+                  <div key={idx} className="sketch-border bg-card p-4 hover:bg-primary-light transition-colors duration-200">
+                    <p className="text-[11px] font-bold uppercase tracking-widest text-muted mb-3">{group.category}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {group.tags.map((tag, i) => (
+                        <span
+                          key={i}
+                          className="text-xs font-bold px-3 py-1 border-2 border-foreground text-foreground bg-background hover:bg-foreground hover:text-background transition-all duration-200 cursor-default"
+                        >
+                          {tag}
+                        </span>
+                      ))}
                     </div>
-                    <div className="bg-background border-2 border-foreground h-4 w-full sketch-border overflow-hidden flex p-[2px]">
-                      <div className="bg-foreground h-full transition-all duration-1000 relative" style={{ width: `${skill.value}%` }}>
-                      </div>
-                    </div>
-                  </li>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </section>
           </article>
         );
