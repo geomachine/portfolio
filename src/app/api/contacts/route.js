@@ -3,11 +3,49 @@ import { successResponse, errorResponse } from '@/lib/api/response';
 import connectDB from '@/lib/db/mongoose';
 import Contact from '@/lib/db/models/Contact';
 
+// Trusted personal/business email providers — blocks disposable/unknown domains
+const ALLOWED_DOMAINS = new Set([
+  // Google
+  'gmail.com', 'googlemail.com',
+  // Microsoft
+  'outlook.com', 'hotmail.com', 'hotmail.co.uk', 'hotmail.fr', 'live.com',
+  'live.co.uk', 'msn.com', 'passport.com',
+  // Yahoo
+  'yahoo.com', 'yahoo.co.uk', 'yahoo.co.in', 'yahoo.fr', 'yahoo.de',
+  'yahoo.es', 'yahoo.it', 'yahoo.ca', 'yahoo.com.au', 'ymail.com',
+  // Apple
+  'icloud.com', 'me.com', 'mac.com',
+  // ProtonMail
+  'proton.me', 'protonmail.com', 'pm.me',
+  // Zoho
+  'zoho.com', 'zohomail.com',
+  // Other reputable
+  'aol.com', 'aim.com', 'mail.com', 'gmx.com', 'gmx.net', 'gmx.de',
+  'tutanota.com', 'tutamail.com', 'tuta.io',
+  'fastmail.com', 'fastmail.fm',
+  'hey.com',
+  'pm.me',
+]);
+
+function isAllowedEmail(email) {
+  const parts = email.toLowerCase().trim().split('@');
+  if (parts.length !== 2) return false;
+  return ALLOWED_DOMAINS.has(parts[1]);
+}
+
 // Public: submit contact form
 export async function POST(request) {
   try {
     await connectDB();
     const body = await request.json();
+
+    if (!body.email || !isAllowedEmail(body.email)) {
+      return errorResponse(
+        'Please use a verified email provider (Gmail, Outlook, Yahoo, iCloud, ProtonMail, etc.)',
+        422
+      );
+    }
+
     const contact = await Contact.create(body);
     return successResponse(contact, 201);
   } catch (e) {

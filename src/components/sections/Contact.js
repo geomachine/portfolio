@@ -4,25 +4,63 @@ import { useState } from 'react';
 
 const ARTICLE = "active bg-card sketch-border paper-pattern p-6 lg:p-8 transition-all duration-500 relative z-10 block animate-[fadeIn_0.4s_ease_forwards]";
 
+const ALLOWED_DOMAINS = new Set([
+  'gmail.com', 'googlemail.com',
+  'outlook.com', 'hotmail.com', 'hotmail.co.uk', 'hotmail.fr', 'live.com',
+  'live.co.uk', 'msn.com', 'passport.com',
+  'yahoo.com', 'yahoo.co.uk', 'yahoo.co.in', 'yahoo.fr', 'yahoo.de',
+  'yahoo.es', 'yahoo.it', 'yahoo.ca', 'yahoo.com.au', 'ymail.com',
+  'icloud.com', 'me.com', 'mac.com',
+  'proton.me', 'protonmail.com', 'pm.me',
+  'zoho.com', 'zohomail.com',
+  'aol.com', 'aim.com', 'mail.com', 'gmx.com', 'gmx.net', 'gmx.de',
+  'tutanota.com', 'tutamail.com', 'tuta.io',
+  'fastmail.com', 'fastmail.fm',
+  'hey.com',
+]);
+
+function isAllowedEmail(email) {
+  const parts = email.toLowerCase().trim().split('@');
+  return parts.length === 2 && ALLOWED_DOMAINS.has(parts[1]);
+}
+
 export function Contact() {
   const [status, setStatus] = useState('idle'); // idle | sending | sent | error
+  const [emailError, setEmailError] = useState('');
+
+  const handleEmailBlur = (e) => {
+    const val = e.target.value.trim();
+    if (val && !isAllowedEmail(val)) {
+      setEmailError('Please use Gmail, Outlook, Yahoo, iCloud, ProtonMail, or similar.');
+    } else {
+      setEmailError('');
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatus('sending');
     const form = e.target;
+    const email = form.email.value.trim();
+
+    if (!isAllowedEmail(email)) {
+      setEmailError('Please use Gmail, Outlook, Yahoo, iCloud, ProtonMail, or similar.');
+      return;
+    }
+
+    setStatus('sending');
     try {
       const res = await fetch('/api/contacts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           fullname: form.fullname.value,
-          email: form.email.value,
+          email,
           message: form.message.value,
         }),
       });
-      if (res.ok) { setStatus('sent'); form.reset(); }
-      else setStatus('error');
+      const json = await res.json();
+      if (res.ok) { setStatus('sent'); form.reset(); setEmailError(''); }
+      else { setStatus('error'); if (res.status === 422) setEmailError(json.error || ''); }
     } catch { setStatus('error'); }
   };
   return (
@@ -51,7 +89,10 @@ export function Contact() {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <input type="text" name="fullname" className="w-full bg-background border-2 border-dashed border-foreground sketch-border px-4 py-3 text-base text-foreground outline-none focus:bg-primary-light transition-all placeholder:text-muted focus:ring-2 focus:ring-foreground focus:ring-offset-2" placeholder="Full name" required />
-            <input type="email" name="email" className="w-full bg-background border-2 border-dashed border-foreground sketch-border px-4 py-3 text-base text-foreground outline-none focus:bg-primary-light transition-all placeholder:text-muted focus:ring-2 focus:ring-foreground focus:ring-offset-2" placeholder="Email address" required />
+          <div className="flex flex-col gap-1">
+              <input type="email" name="email" onBlur={handleEmailBlur} onChange={() => setEmailError('')} className={`w-full bg-background border-2 border-dashed sketch-border px-4 py-3 text-base text-foreground outline-none focus:bg-primary-light transition-all placeholder:text-muted focus:ring-2 focus:ring-foreground focus:ring-offset-2 ${emailError ? 'border-red-500' : 'border-foreground'}`} placeholder="Email address" required />
+              {emailError && <p className="text-xs text-red-500 font-medium">{emailError}</p>}
+            </div>
           </div>
           <textarea name="message" className="w-full bg-background border-2 border-dashed border-foreground sketch-border px-4 py-4 text-base text-foreground outline-none focus:bg-primary-light transition-all min-h-[120px] placeholder:text-muted resize-none focus:ring-2 focus:ring-foreground focus:ring-offset-2" placeholder="Your Message" required />
 
