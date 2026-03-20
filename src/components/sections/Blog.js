@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { PenTool, ArrowLeft, Clock, Calendar, Loader2 } from "lucide-react";
+import { MarkdownContent } from "@/components/admin/MarkdownEditor";
 
 const ARTICLE = "active bg-card sketch-border paper-pattern p-6 lg:p-8 transition-all duration-500 relative z-10 block animate-[fadeIn_0.4s_ease_forwards]";
 
@@ -126,10 +127,8 @@ function BlogDetail({ blog, onBack }) {
       {loading ? (
         <div className="py-12 text-center text-muted"><Loader2 size={20} className="animate-spin mx-auto" /></div>
       ) : (
-        <div className="space-y-5 text-muted text-base lg:text-lg leading-relaxed font-light">
-          {(full.content || '').split('\n\n').filter(Boolean).map((para, i) => (
-            <p key={i}>{para}</p>
-          ))}
+        <div className="text-base lg:text-lg">
+          <MarkdownContent content={full.content || ''} />
         </div>
       )}
     </article>

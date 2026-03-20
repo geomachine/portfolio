@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { Plus, Loader2 } from 'lucide-react';
 import { Table, Modal, ConfirmDialog, Btn, Field, Input, Textarea, SearchInput, Pagination, Badge, useToast } from '@/components/admin/ui';
 import { ImageUpload } from '@/components/admin/ImageUpload';
+import { MarkdownEditor } from '@/components/admin/MarkdownEditor';
 import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -78,7 +79,13 @@ function BlogModal({ open, onClose, selected, onSaved, toast }) {
           <Textarea {...register('excerpt')} rows={2} placeholder="Short summary shown on the blog list" />
         </Field>
         <Field label="Content" error={errors.content?.message} required>
-          <Textarea {...register('content')} rows={10} placeholder="Full blog content..." />
+          <Controller
+            name="content"
+            control={control}
+            render={({ field }) => (
+              <MarkdownEditor value={field.value} onChange={field.onChange} />
+            )}
+          />
         </Field>
         {apiError && <p className="text-xs text-red-500 bg-red-500/10 px-3 py-2">{apiError}</p>}
         <div className="flex justify-end gap-3 pt-2 border-t border-dashed border-card-border">
