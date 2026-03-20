@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Plus, Loader2 } from 'lucide-react';
-import { Table, Modal, ConfirmDialog, Btn, Field, Input, Textarea } from '@/components/admin/ui';
+import { Table, Modal, ConfirmDialog, Btn, Field, Input, Textarea, SearchInput, Pagination, Badge, useToast } from '@/components/admin/ui';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -13,31 +13,27 @@ const schema = z.object({
   excerpt:  z.string().min(1, 'Required'),
   content:  z.string().min(1, 'Required'),
   tags:     z.string().optional(),
+  image:    z.string().optional(),
 });
 
-function BlogModal({ open, onClose, selected, onSaved }) {
+function BlogModal({ open, onClose, selected, onSaved, toast }) {
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState('');
-  const { register, handleSubmit, reset, formState: { errors } } = useForm({
-    resolver: zodResolver(schema),
-  });
+  const { register, handleSubmit, reset, formState: { errors } } = useForm({ resolver: zodResolver(schema) });
 
   useEffect(() => {
     if (open) {
       reset(selected ? {
-        title: selected.title,
-        category: selected.category,
-        excerpt: selected.excerpt,
-        content: selected.content,
-        tags: selected.tags?.join(', ') || '',
-      } : { title: '', category: 'General', excerpt: '', content: '', tags: '' });
+        title: selected.title, category: selected.category,
+        excerpt: selected.excerpt, content: selected.content,
+        tags: selected.tags?.join(', ') || '', image: selected.image || '',
+      } : { title: '', category: 'General', excerpt: '', content: '', tags: '', image: '' });
       setApiError('');
     }
   }, [open, selected, reset]);
 
   const onSubmit = async (data) => {
-    setLoading(true);
-    setApiError('');
+    setLoading(true); setApiError('');
     const payload = { ...data, tags: data.tags ? data.tags.split(',').map(t => t.trim()).filter(Boolean) : [] };
     try {
       const res = await fetch(selected ? `/api/blogs/${selected._id}` : '/api/blogs', {
@@ -48,13 +44,14 @@ function BlogModal({ open, onClose, selected, onSaved }) {
       const json = await res.json();
       if (!res.ok) { setApiError(json.error || 'Failed'); return; }
       onSaved(json.data, !!selected);
+      toast.show(selected ? 'Blog updated.' : 'Blog created.');
       onClose();
     } catch { setApiError('Something went wrong'); }
     finally { setLoading(false); }
   };
 
   return (
-    <Modal open={open} onClose={onClose} title={selected ? 'Edit Blog' : 'New Blog Post'} wide>
+    <Modal open={open} onClose={onClose} title={selected ? 'Edit Blog Post' : 'New Blog Post'} wide>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <Field label="Title" error={errors.title?.message} required>
           <Input {...register('title')} placeholder="Post title" />
@@ -63,15 +60,18 @@ function BlogModal({ open, onClose, selected, onSaved }) {
           <Field label="Category" error={errors.category?.message} required>
             <Input {...register('category')} placeholder="e.g. Engineering" />
           </Field>
-          <Field label="Tags" error={errors.tags?.message}>
+          <Field label="Tags">
             <Input {...register('tags')} placeholder="tag1, tag2, tag3" />
           </Field>
         </div>
+        <Field label="Cover Image URL">
+          <Input {...register('image')} placeholder="https://... or /images/..." />
+        </Field>
         <Field label="Excerpt" error={errors.excerpt?.message} required>
           <Textarea {...register('excerpt')} rows={2} placeholder="Short summary shown on the blog list" />
         </Field>
-        <Field label="Content (Markdown / HTML)" error={errors.content?.message} required>
-          <Textarea {...register('content')} rows={10} placeholder="Full blog content..." />
+        <Field label="Content" error={errors.content?.message} required>
+          <Textarea {...register('content')} rows={10} placeholder="Full blog content (Markdown or HTML)..." />
         </Field>
         {apiError && <p className="text-xs text-red-500 bg-red-500/10 px-3 py-2">{apiError}</p>}
         <div className="flex justify-end gap-3 pt-2 border-t border-card-border">
@@ -93,55 +93,88 @@ export default function AdminBlogsPage() {
   const [selected, setSelected] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
   const [deleting, setDeleting] = useState(false);
+  const [q, setQ] = useState('');
+  const [page, setPage] = useState(1);
+  const [pages, setPages] = useState(1);
+  const [total, setTotal] = useState(0);
+  const toast = useToast();
 
-  useEffect(() => {
-    fetch('/api/blogs').then(r => r.json()).then(j => {
-      setBlogs(j.data || []);
+  const load = useCallback((p = 1, query = q) => {
+    setLoading(true);
+    const params = new URLSearchParams({ page: p, limit: 10, ...(query && { q: query }) });
+    fetch(`/api/blogs?${params}`).then(r => r.json()).then(j => {
+      const d = j.data;
+      setBlogs(d?.items || d || []);
+      setTotal(d?.total ?? (d?.length ?? 0));
+      setPages(d?.pages ?? 1);
+      setPage(p);
       setLoading(false);
     });
-  }, []);
+  }, [q]);
+
+  useEffect(() => { load(1); }, []);
+
+  const handleSearch = (val) => {
+    setQ(val);
+    const params = new URLSearchParams({ page: 1, limit: 10, ...(val && { q: val }) });
+    setLoading(true);
+    fetch(`/api/blogs?${params}`).then(r => r.json()).then(j => {
+      const d = j.data;
+      setBlogs(d?.items || d || []);
+      setTotal(d?.total ?? (d?.length ?? 0));
+      setPages(d?.pages ?? 1);
+      setPage(1);
+      setLoading(false);
+    });
+  };
 
   const handleSaved = (blog, isEdit) => {
-    setBlogs(prev => isEdit ? prev.map(b => b._id === blog._id ? blog : b) : [blog, ...prev]);
+    if (isEdit) setBlogs(prev => prev.map(b => b._id === blog._id ? blog : b));
+    else load(1);
   };
 
   const handleDelete = async () => {
     setDeleting(true);
     await fetch(`/api/blogs/${deleteId}`, { method: 'DELETE' });
     setBlogs(prev => prev.filter(b => b._id !== deleteId));
-    setDeleteId(null);
-    setDeleting(false);
+    setDeleteId(null); setDeleting(false);
+    toast.show('Blog deleted.');
   };
 
   const columns = [
-    { header: 'Title', key: 'title' },
-    { header: 'Category', key: 'category' },
-    { header: 'Tags', key: 'tags', render: (v) => v?.join(', ') || '—' },
+    { header: 'Title', key: 'title', render: (v) => <span className="font-bold">{v}</span> },
+    { header: 'Category', key: 'category', render: (v) => <Badge>{v}</Badge> },
+    { header: 'Tags', key: 'tags', render: (v) => v?.length ? v.slice(0, 3).map(t => <Badge key={t} className="mr-1">{t}</Badge>) : '—' },
     { header: 'Date', key: 'createdAt', render: (v) => v ? new Date(v).toLocaleDateString() : '—' },
   ];
 
   return (
     <div>
+      {toast.ToastEl}
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-3xl font-signature font-bold text-foreground">Blogs</h1>
-          <p className="text-sm text-muted">{blogs.length} posts</p>
+          <p className="text-sm text-muted">{total} post{total !== 1 ? 's' : ''}</p>
         </div>
         <Btn onClick={() => { setSelected(null); setModalOpen(true); }}>
           <Plus size={15} /> New Post
         </Btn>
       </div>
 
-      <div className="bg-card border-2 border-card-border sketch-border">
+      <div className="bg-card border-2 border-card-border">
+        <div className="px-4 py-3 border-b-2 border-card-border">
+          <SearchInput value={q} onChange={handleSearch} placeholder="Search by title, category, tag..." className="max-w-sm" />
+        </div>
         <Table
           columns={columns} data={blogs} loading={loading}
           onEdit={(b) => { setSelected(b); setModalOpen(true); }}
           onDelete={(b) => setDeleteId(b._id)}
-          emptyText="No blog posts yet. Create your first one."
+          emptyText="No blog posts yet."
         />
+        <Pagination page={page} pages={pages} onPage={(p) => load(p)} />
       </div>
 
-      <BlogModal open={modalOpen} onClose={() => setModalOpen(false)} selected={selected} onSaved={handleSaved} />
+      <BlogModal open={modalOpen} onClose={() => setModalOpen(false)} selected={selected} onSaved={handleSaved} toast={toast} />
       <ConfirmDialog open={!!deleteId} onClose={() => setDeleteId(null)} onConfirm={handleDelete} loading={deleting} />
     </div>
   );

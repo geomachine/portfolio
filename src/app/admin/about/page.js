@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Loader2, Plus, Trash2 } from 'lucide-react';
-import { Btn, Field, Input, Textarea } from '@/components/admin/ui';
+import { Btn, Field, Input, Textarea, useToast } from '@/components/admin/ui';
 
 const DEFAULT = {
   name: 'Iqbal Hossain', title: 'Senior Software Engineer',
@@ -24,7 +24,7 @@ export default function AdminAboutPage() {
   const [data, setData] = useState(DEFAULT);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
+  const toast = useToast();
 
   useEffect(() => {
     fetch('/api/about').then(r => r.json()).then(j => {
@@ -35,14 +35,14 @@ export default function AdminAboutPage() {
 
   const save = async () => {
     setSaving(true);
-    await fetch('/api/about', {
+    const res = await fetch('/api/about', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     });
     setSaving(false);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2500);
+    if (res.ok) toast.show('Changes saved.');
+    else toast.show('Failed to save.', 'error');
   };
 
   const set = (key, val) => setData(d => ({ ...d, [key]: val }));
@@ -50,17 +50,21 @@ export default function AdminAboutPage() {
   if (loading) return <div className="py-16 text-center text-muted"><Loader2 size={24} className="animate-spin mx-auto" /></div>;
 
   return (
-    <div className="space-y-8 max-w-3xl">
+    <div className="space-y-6 max-w-3xl">
+      {toast.ToastEl}
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-signature font-bold text-foreground">About</h1>
+        <div>
+          <h1 className="text-3xl font-signature font-bold text-foreground">About</h1>
+          <p className="text-sm text-muted">Profile, contact info, services & tech stack.</p>
+        </div>
         <Btn onClick={save} disabled={saving}>
           {saving && <Loader2 size={14} className="animate-spin" />}
-          {saved ? '✓ Saved' : 'Save Changes'}
+          Save Changes
         </Btn>
       </div>
 
       {/* Identity */}
-      <section className="bg-card border-2 border-card-border sketch-border p-6 space-y-4">
+      <section className="bg-card border-2 border-card-border p-6 space-y-4">
         <h2 className="font-signature font-bold text-lg text-foreground border-b border-card-border pb-2">Identity</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Field label="Full Name" required><Input value={data.name} onChange={e => set('name', e.target.value)} /></Field>
@@ -70,7 +74,7 @@ export default function AdminAboutPage() {
       </section>
 
       {/* Bio */}
-      <section className="bg-card border-2 border-card-border sketch-border p-6 space-y-4">
+      <section className="bg-card border-2 border-card-border p-6 space-y-4">
         <h2 className="font-signature font-bold text-lg text-foreground border-b border-card-border pb-2">Bio Paragraphs</h2>
         {(data.bio || []).map((p, i) => (
           <div key={i} className="flex gap-2">
@@ -84,7 +88,7 @@ export default function AdminAboutPage() {
       </section>
 
       {/* Contact */}
-      <section className="bg-card border-2 border-card-border sketch-border p-6 space-y-4">
+      <section className="bg-card border-2 border-card-border p-6 space-y-4">
         <h2 className="font-signature font-bold text-lg text-foreground border-b border-card-border pb-2">Contact Info</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Field label="Email"><Input value={data.email} onChange={e => set('email', e.target.value)} /></Field>
@@ -99,14 +103,14 @@ export default function AdminAboutPage() {
       </section>
 
       {/* Services */}
-      <section className="bg-card border-2 border-card-border sketch-border p-6 space-y-4">
-        <h2 className="font-signature font-bold text-lg text-foreground border-b border-card-border pb-2">Services / What I&apos;m Doing</h2>
+      <section className="bg-card border-2 border-card-border p-6 space-y-4">
+        <h2 className="font-signature font-bold text-lg text-foreground border-b border-card-border pb-2">Services</h2>
         {(data.services || []).map((s, i) => (
           <div key={i} className="border border-card-border p-4 space-y-3 relative">
             <button onClick={() => set('services', data.services.filter((_, j) => j !== i))} className="absolute top-3 right-3 text-muted hover:text-red-500 transition-colors"><Trash2 size={14} /></button>
             <div className="grid grid-cols-2 gap-3">
               <Field label="Title"><Input value={s.title} onChange={e => { const sv = [...data.services]; sv[i] = { ...sv[i], title: e.target.value }; set('services', sv); }} /></Field>
-              <Field label="Icon name"><Input value={s.icon} onChange={e => { const sv = [...data.services]; sv[i] = { ...sv[i], icon: e.target.value }; set('services', sv); }} placeholder="Server, Globe..." /></Field>
+              <Field label="Icon"><Input value={s.icon} onChange={e => { const sv = [...data.services]; sv[i] = { ...sv[i], icon: e.target.value }; set('services', sv); }} placeholder="Server, Globe..." /></Field>
             </div>
             <Field label="Description"><Textarea value={s.text} rows={2} onChange={e => { const sv = [...data.services]; sv[i] = { ...sv[i], text: e.target.value }; set('services', sv); }} /></Field>
           </div>
@@ -115,7 +119,7 @@ export default function AdminAboutPage() {
       </section>
 
       {/* Tech Stack */}
-      <section className="bg-card border-2 border-card-border sketch-border p-6 space-y-4">
+      <section className="bg-card border-2 border-card-border p-6 space-y-4">
         <h2 className="font-signature font-bold text-lg text-foreground border-b border-card-border pb-2">Tech Stack</h2>
         {(data.techStack || []).map((t, i) => (
           <div key={i} className="flex gap-3 items-start">

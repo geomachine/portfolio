@@ -15,13 +15,26 @@ export async function POST(request) {
   }
 }
 
-// Admin: list all submissions
-export async function GET() {
+// Admin: list all submissions with optional filter
+export async function GET(request) {
   const auth = await requireAdmin();
   if (auth) return auth;
   try {
     await connectDB();
-    const contacts = await Contact.find().sort({ createdAt: -1 }).lean();
+    const { searchParams } = new URL(request.url);
+    const read = searchParams.get('read');
+    const q    = searchParams.get('q') || '';
+
+    const filter = {};
+    if (read === 'false') filter.read = false;
+    if (read === 'true')  filter.read = true;
+    if (q) filter.$or = [
+      { fullname: { $regex: q, $options: 'i' } },
+      { email:    { $regex: q, $options: 'i' } },
+      { message:  { $regex: q, $options: 'i' } },
+    ];
+
+    const contacts = await Contact.find(filter).sort({ createdAt: -1 }).lean();
     return successResponse(contacts);
   } catch {
     return errorResponse('Failed to fetch', 500);
