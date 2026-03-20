@@ -359,13 +359,30 @@ export default function PortfolioPage() {
   };
 
   return (
-    <main className="w-full max-w-[1200px] mt-[30px] mx-auto flex flex-col gap-5 relative pb-[80px] lg:flex-row lg:items-start lg:mt-[60px] lg:pb-[60px] lg:gap-[25px]">
-      <Sidebar />
-      <div className="flex-1 w-full relative min-h-0">
-        <Navbar activePage={activePage} setActivePage={setActivePage} />
-        {renderSection()}
-      </div>
-      <ThemeToggle />
-    </main>
+    <>
+      <main className="w-full max-w-[1200px] mt-[30px] mx-auto flex flex-col gap-5 relative pb-[80px] lg:flex-row lg:items-start lg:mt-[60px] lg:pb-[60px] lg:gap-[25px]">
+        <Sidebar />
+        <div className="flex-1 w-full relative min-h-0">
+          <Navbar activePage={activePage} setActivePage={setActivePage} />
+          {renderSection()}
+        </div>
+        <ThemeToggle />
+      </main>
+
+      <footer className="w-full max-w-[1200px] mx-auto px-4 pb-24 lg:pb-10">
+        <div className="border-t-2 border-dashed border-card-border pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-xs text-muted font-bold tracking-widest uppercase">
+            © {new Date().getFullYear()} Iqbal Hossain. All rights reserved.
+          </p>
+          <div className="flex items-center gap-4 text-xs text-muted font-bold tracking-widest uppercase">
+            <a href="https://github.com/geomachine" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors duration-200">GitHub</a>
+            <span className="text-card-border">·</span>
+            <a href="https://linkedin.com/in/geomachine" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors duration-200">LinkedIn</a>
+            <span className="text-card-border">·</span>
+            <a href="https://nesohq.org" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors duration-200">NesoHQ</a>
+          </div>
+        </div>
+      </footer>
+    </>
   );
 }
