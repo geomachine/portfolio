@@ -1,0 +1,106 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\usepackage{parskip}
+
+% Section formatting
+\titleformat{\section}{\large\bfseries}{}{0em}{}[\titlerule]
+\titleformat{\subsection}{\normalsize\bfseries}{}{0em}{}
+
+%====================
+% PERSONAL INFO
+%====================
+\begin{document}
+
+\begin{center}
+    {\LARGE \textbf{Iqbal Hossain}}\\
+    \vspace{2mm}
+    \href{mailto:zafar.iq3089@gmail.com}{zafar.iq3089@gmail.com} | +880 1403229479 | Dhaka-1230, Bangladesh\\
+    \href{https://linkedin.com/in/geomachine}{linkedin.com/in/geomachine} | \href{https://github.com/geomachine}{github.com/geomachine} | \href{https://github.com/nesohq}{github.com/nesohq}
+\end{center}
+
+%====================
+% PROFESSIONAL SUMMARY
+%====================
+\section*{Professional Summary}
+Senior Software Engineer with 3+ years developing fullstack and distributed systems serving in production. Expertise in Kubernetes, Docker, Terraform, and infrastructure automation. Specialized in Golang and Typescript with strong focus on system reliability, observability, and cost-efficient architecture. Founder of NesoHQ, operating, managing open-source collaboration and infrastructure.
+
+%====================
+% EXPERIENCE
+%====================
+\section*{Work Experience}
+\textbf{Zalmi Technology} \hfill \textit{Senior Software Engineer and Backend Lead (Jan 2026--Present)} \\
+Dhaka, Bangladesh
+\begin{itemize}[leftmargin=*,noitemsep]
+    \item Leading backend engineering team and infrastructure architecture for a platform serving \textbf{1M+ users}, making critical decisions on system scaling, containerization strategies, and cloud infrastructure optimization.
+    \item Architecting and managing cloud-native infrastructure with Docker and Kubernetes, ensuring \textbf{99.9\% uptime} and efficient resource utilization through automated scaling and monitoring.
+    \item Implementing infrastructure-as-code practices using Terraform for reproducible deployments, reducing provisioning time and infrastructure drift.
+    \item Driving DevOps culture and CI/CD automation, enabling rapid, reliable deployments while maintaining system stability and observability.
+    \item Optimizing infrastructure costs through efficient resource allocation, caching strategies, and performance tuning across distributed services.
+\end{itemize}
+
+\textbf{Technonext (US-Bangla Airlines Concern)} \hfill \textit{Software Engineer (Apr 2025--Dec 2025)} \\
+Dhaka, Bangladesh
+\begin{itemize}[leftmargin=*,noitemsep]
+    \item Architected and deployed Geo Finder Service—a geo-distributed, cloud-ready REST API with \textbf{sub-100ms latency} through multi-tier caching (Redis) and optimized data structures.
+    \item Containerized microservices using Docker and orchestrated deployments with Kubernetes, implementing health checks, auto-scaling, and rolling updates for zero-downtime releases.
+    \item Built automated CI/CD pipelines with GitHub Actions and Jenkins, reducing deployment time by \textbf{70\%} and enabling multiple daily releases with confidence.
+    \item Implemented comprehensive observability stack (Prometheus + Grafana) for real-time monitoring, alerting, and performance analysis across distributed services.
+    \item Designed horizontally scalable microservices architecture supporting event-driven messaging patterns for high-throughput, fault-tolerant operations.
+\end{itemize}
+
+\textbf{ShareTrip Ltd.} \hfill \textit{Software Engineer (Feb 2024--Mar 2025)} \\
+Dhaka, Bangladesh
+\begin{itemize}[leftmargin=*,noitemsep]
+    \item Managed infrastructure and core services for large-scale travel platform, ensuring high availability through load balancing and auto-scaling during peak traffic.
+    \item Built automated scheduling and orchestration service using containerized workloads, reducing manual operations by \textbf{60\%}.
+    \item Refactored monolithic workflows into cloud-native microservices, improving deployment flexibility and horizontal scalability.
+\end{itemize}
+
+\textbf{Axiata Digital Agency Asia} \hfill \textit{Junior Software Engineer (Dec 2022--Jan 2024)} \\
+Dhaka, Bangladesh
+\begin{itemize}[leftmargin=*,noitemsep]
+    \item Built omnichannel communication platform handling high-volume transactional messages with fault-tolerant delivery.
+    \item Developed real-time survey platform serving \textbf{10,000+ daily users} with dynamic data synchronization.
+\end{itemize}
+
+%====================
+% CLOUD & INFRASTRUCTURE PROJECTS
+%====================
+\section*{Cloud \& Infrastructure Projects}
+\begin{itemize}[leftmargin=*,noitemsep]
+    \item Designed and operated private hybrid cloud infrastructure for NesoHQ using self-hosted Headscale and Caddy reverse proxy for cost-efficient, secure networking.
+    \item Deployed and managed multi-node \textbf{K3s Kubernetes clusters} across geographically distributed nodes, demonstrating expertise in lightweight, production-grade Kubernetes.
+    \item Implemented complete \textbf{Infrastructure-as-Code} pipeline using Terraform and Kustomization for declarative infrastructure management and automated provisioning.
+    \item Built observability platform with \textbf{Prometheus and Grafana} for real-time metrics, visualization, and alerting across distributed workloads.
+\end{itemize}
+
+%====================
+% TECHNICAL SKILLS
+%====================
+\section*{Technical Skills}
+\textbf{Programming Languages:} Golang, TypeScript, Python, Bash \\
+\textbf{Container \& Orchestration:} Docker, Kubernetes, K3s, EKS, Kustomization, Helm, Container Networking \\
+\textbf{Infrastructure \& IaC:} Terraform, AWS CDK, Infrastructure Automation, Load Balancing \\
+\textbf{Cloud Platforms:} AWS (EC2, EKS, S3, Route53, CloudWatch, ECR, ECS, Lambda), DigitalOcean, Hetzner \\
+\textbf{DevOps \& CI/CD:} GitHub Actions, Jenkins, GitLab CI, Automated Deployments \\
+\textbf{Observability \& Monitoring:} Prometheus, Grafana, Logging Systems, Metrics Collection, Alerting \\
+\textbf{Databases:} PostgreSQL, MySQL, MongoDB, ElasticSearch \\
+\textbf{Caching \& Messaging:} Redis, RabbitMQ \\
+\textbf{Networking:} Caddy, Nginx, Tailscale, Headscale, DNS, TLS/SSL, Load Balancing \\
+\textbf{Frontend:} React.js, Next.js, Tailwind CSS
+
+%====================
+% OPEN SOURCE & LEADERSHIP
+%====================
+\section*{Open Source \& Leadership}
+\href{https://nesohq.org}{\textbf{NesoHQ - Open Innovation Community}} \hfill 2022--Present
+\begin{itemize}[leftmargin=*,noitemsep]
+    \item Founder and Infrastructure Lead, operating production-grade private cloud infrastructure serving distributed open-source community.
+    \item Architected cost-efficient hybrid cloud using K3s Kubernetes, Caddy reverse proxy, and Tailscale overlay networking.
+    \item Mentored developers on cloud-native practices, Kubernetes deployments, infrastructure automation, and software deployment.
+\end{itemize}
+
+\end{document}

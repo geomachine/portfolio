@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Sidebar } from "@/components/Sidebar";
 import { Navbar } from "@/components/Navbar";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { Palette, Code, Smartphone, Camera, User, GraduationCap, Briefcase, PenTool } from "lucide-react";
+import { Server, Globe, GitBranch, Database, GraduationCap, Briefcase, PenTool } from "lucide-react";
 
 export default function PortfolioPage() {
   const [activePage, setActivePage] = useState("about");
@@ -24,27 +24,25 @@ export default function PortfolioPage() {
 
             <section className="about-text text-muted text-base lg:text-lg leading-relaxed space-y-6 font-light mb-12">
               <p>
-                I&apos;m Creative Director and UI/UX Designer from Sydney, Australia, working in web development and print media.
-                I enjoy turning complex problems into simple, beautiful and intuitive designs.
+                Senior Software Engineer with 3+ years developing fullstack and distributed systems serving in production.
+                Expertise in Kubernetes, Docker, Terraform, and infrastructure automation.
               </p>
               <p>
-                My job is to build your website so that it is functional and user-friendly but at the same time attractive.
-                Moreover, I add personal touch to your product and make sure that is eye-catching and easy to use.
-                My aim is to bring across your message and identity in the most creative way.
-                I created web design for many famous brand companies.
+                Specialized in Golang and TypeScript with a strong focus on system reliability, observability, and cost-efficient architecture.
+                Founder of NesoHQ, operating and managing open-source collaboration and infrastructure.
               </p>
             </section>
 
             <section className="service mb-12">
               <h3 className="text-3xl lg:text-4xl font-signature font-bold mb-6 text-foreground flex items-center gap-3">
-                <span className="text-foreground text-2xl">✦</span> What i'm doing
+                <span className="text-foreground text-2xl">✦</span> What I&apos;m doing
               </h3>
               <ul className="service-list grid grid-cols-1 md:grid-cols-2 gap-6">
                 {[
-                  { title: "Web design", text: "The most modern and high-quality design made at a professional level.", icon: <Palette size={32} /> },
-                  { title: "Web development", text: "High-quality development of sites at the professional level.", icon: <Code size={32} /> },
-                  { title: "Mobile apps", text: "Professional development of applications for iOS and Android.", icon: <Smartphone size={32} /> },
-                  { title: "Photography", text: "I make high-quality photos of any category at a professional level.", icon: <Camera size={32} /> }
+                  { title: "Backend Engineering", text: "Building scalable, distributed systems in Golang and TypeScript with a focus on reliability and performance.", icon: <Server size={32} /> },
+                  { title: "Cloud & DevOps", text: "Architecting cloud-native infrastructure with Kubernetes, Docker, and Terraform for automated, reproducible deployments.", icon: <Globe size={32} /> },
+                  { title: "CI/CD & Automation", text: "Designing automated pipelines with GitHub Actions and Jenkins, enabling rapid and confident daily releases.", icon: <GitBranch size={32} /> },
+                  { title: "Observability", text: "Implementing full observability stacks with Prometheus and Grafana for real-time monitoring and alerting.", icon: <Database size={32} /> }
                 ].map((s, idx) => (
                   <li key={idx} className="bg-card p-6 sketch-border flex items-start flex-col gap-4 hover:translate-x-1 hover:translate-y-1 transition-all duration-300 group relative hover:bg-primary-light">
                     <div className="text-4xl text-foreground shrink-0 bg-transparent w-12 h-12 flex items-center justify-center transition-all duration-500 group-hover:scale-110">
@@ -59,37 +57,45 @@ export default function PortfolioPage() {
               </ul>
             </section>
 
-            <section className="testimonials mb-12 overflow-visible">
+            <section className="mb-12">
               <h3 className="text-3xl lg:text-4xl font-signature font-bold mb-6 text-foreground flex items-center gap-3">
-                <span className="text-foreground text-2xl">✦</span> Testimonials
+                <span className="text-foreground text-2xl">✦</span> Open Source
               </h3>
-              <ul className="flex gap-6 overflow-x-auto pb-8 scrollbar-hide py-4 snap-x">
-                {[
-                  { name: "Daniel Lewis", text: "Richard was hired to create a corporate identity. We were very pleased with the work...", avatar: <User size={24} /> },
-                  { name: "Jessica Miller", text: "Richard was hired to create a corporate identity. We were very pleased with the work...", avatar: <User size={24} /> }
-                ].map((t, i) => (
-                  <li key={i} className="shrink-0 w-full md:w-[48%] bg-card sketch-border p-6 relative snap-center duration-300 hover:bg-primary-light">
-                    <div className="flex items-center gap-4 mb-4 relative z-10">
-                      <div className="w-12 h-12 sketch-border bg-card flex shrink-0 items-center justify-center text-2xl">
-                        {t.avatar}
-                      </div>
-                      <h4 className="font-signature font-bold text-2xl text-foreground">{t.name}</h4>
-                    </div>
-                    <p className="text-sm lg:text-base text-muted italic font-light line-clamp-3 leading-relaxed relative z-10">"{t.text}"</p>
-                    <div className="text-6xl absolute top-2 right-4 text-foreground/10 font-signature font-bold leading-none select-none pointer-events-none z-0">"</div>
-                  </li>
-                ))}
-              </ul>
+              <div className="bg-card sketch-border p-6 hover:bg-primary-light transition-all duration-300 group">
+                <div className="flex items-start justify-between flex-wrap gap-2 mb-3">
+                  <a href="https://nesohq.org" target="_blank" rel="noopener noreferrer" className="font-signature font-bold text-2xl text-foreground hover:underline underline-offset-4">NesoHQ — Open Innovation Community</a>
+                  <span className="text-xs font-bold text-muted tracking-widest uppercase sketch-border px-3 py-1 bg-background">2022 — Present</span>
+                </div>
+                <ul className="space-y-2 text-sm lg:text-base text-muted font-light leading-relaxed list-none">
+                  {[
+                    "Founder and Infrastructure Lead, operating production-grade private cloud infrastructure for a distributed open-source community.",
+                    "Architected cost-efficient hybrid cloud using K3s Kubernetes, Caddy reverse proxy, and Tailscale overlay networking.",
+                    "Mentored developers on cloud-native practices, Kubernetes deployments, and infrastructure automation."
+                  ].map((item, i) => (
+                    <li key={i} className="flex gap-2"><span className="text-foreground mt-1 shrink-0">—</span>{item}</li>
+                  ))}
+                </ul>
+              </div>
             </section>
 
-            <section className="clients">
+            <section>
               <h3 className="text-3xl lg:text-4xl font-signature font-bold mb-6 text-foreground flex items-center gap-3">
-                <span className="text-foreground text-2xl">✦</span> Clients
+                <span className="text-foreground text-2xl">✦</span> Tech Stack
               </h3>
-              <ul className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {[1, 2, 3, 4].map(c => (
-                  <li key={c} className="flex items-center justify-center py-6 sketch-border bg-card hover:bg-foreground hover:text-background transition-all duration-300 cursor-pointer group">
-                    <div className="text-lg font-signature font-bold tracking-widest text-muted group-hover:text-background transition-colors duration-300">BRAND {c}</div>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {[
+                  { label: "Languages", value: "Golang, TypeScript, Python, Bash" },
+                  { label: "Containers", value: "Docker, Kubernetes, K3s, Helm, EKS" },
+                  { label: "IaC", value: "Terraform, AWS CDK, Kustomization" },
+                  { label: "Cloud", value: "AWS, DigitalOcean, Hetzner" },
+                  { label: "Observe", value: "Prometheus, Grafana, Logging, Alerting" },
+                  { label: "Databases", value: "PostgreSQL, MySQL, MongoDB, Redis" },
+                  { label: "Networking", value: "Caddy, Nginx, Tailscale, Headscale" },
+                  { label: "Frontend", value: "React.js, Next.js, Tailwind CSS" },
+                ].map((item, i) => (
+                  <li key={i} className="flex gap-3 items-start sketch-border bg-card px-4 py-3 hover:bg-primary-light transition-all duration-200">
+                    <span className="text-xs font-bold uppercase tracking-widest text-muted shrink-0 w-24 pt-[2px]">{item.label}</span>
+                    <span className="text-sm text-foreground font-medium leading-snug">{item.value}</span>
                   </li>
                 ))}
               </ul>
