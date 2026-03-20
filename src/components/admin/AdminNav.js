@@ -2,8 +2,9 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { LogOut, LayoutDashboard, User, Briefcase, FileText, MessageSquare, FolderKanban, Menu, X } from 'lucide-react';
+import { LogOut, LayoutDashboard, User, Briefcase, FileText, MessageSquare, FolderKanban, Menu, X, ExternalLink } from 'lucide-react';
 import { useState } from 'react';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 const navItems = [
   { label: 'Dashboard', href: '/admin',           icon: LayoutDashboard },
@@ -36,6 +37,9 @@ export default function AdminNav() {
 
   return (
     <>
+      {/* Theme toggle — floats over everything */}
+      <ThemeToggle />
+
       {/* Desktop sidebar */}
       <aside className="hidden md:flex fixed top-0 left-0 h-full w-56 flex-col bg-card border-r-2 border-card-border z-40">
         <div className="px-5 py-5 border-b-2 border-card-border">
@@ -59,7 +63,15 @@ export default function AdminNav() {
           ))}
         </nav>
 
-        <div className="px-3 py-4 border-t-2 border-card-border">
+        {/* Sidebar footer */}
+        <div className="px-3 py-4 border-t-2 border-card-border space-y-1">
+          <Link
+            href="/"
+            className="flex items-center gap-3 px-3 py-2.5 w-full text-sm font-bold text-muted hover:text-foreground hover:bg-primary-light transition-colors"
+          >
+            <ExternalLink size={16} />
+            View Portfolio
+          </Link>
           <button
             onClick={handleLogout} disabled={loggingOut}
             className="flex items-center gap-3 px-3 py-2.5 w-full text-sm font-bold text-muted hover:text-red-500 transition-colors"
@@ -67,6 +79,9 @@ export default function AdminNav() {
             <LogOut size={16} />
             {loggingOut ? 'Logging out...' : 'Logout'}
           </button>
+          <p className="text-[10px] text-muted text-center pt-2 tracking-widest uppercase">
+            © {new Date().getFullYear()} Iqbal Hossain
+          </p>
         </div>
       </aside>
 
@@ -96,9 +111,17 @@ export default function AdminNav() {
                 {label}
               </Link>
             ))}
+            <Link
+              href="/"
+              onClick={() => setMobileOpen(false)}
+              className="mt-2 flex items-center gap-3 px-4 py-3 text-sm font-bold text-muted border-2 border-card-border hover:text-foreground"
+            >
+              <ExternalLink size={16} />
+              View Portfolio
+            </Link>
             <button
               onClick={handleLogout}
-              className="mt-4 flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-500 border-2 border-red-500/30"
+              className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-500 border-2 border-red-500/30"
             >
               <LogOut size={16} />
               Logout
