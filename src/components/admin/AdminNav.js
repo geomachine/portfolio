@@ -2,13 +2,14 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { LogOut, LayoutDashboard, User, Briefcase, FileText, MessageSquare, Menu, X } from 'lucide-react';
+import { LogOut, LayoutDashboard, User, Briefcase, FileText, MessageSquare, FolderKanban, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 
 const navItems = [
-  { label: 'Dashboard', href: '/admin',          icon: LayoutDashboard },
+  { label: 'Dashboard', href: '/admin',           icon: LayoutDashboard },
   { label: 'About',     href: '/admin/about',     icon: User },
   { label: 'Resume',    href: '/admin/resume',    icon: Briefcase },
+  { label: 'Projects',  href: '/admin/projects',  icon: FolderKanban },
   { label: 'Blogs',     href: '/admin/blogs',     icon: FileText },
   { label: 'Messages',  href: '/admin/messages',  icon: MessageSquare },
 ];
