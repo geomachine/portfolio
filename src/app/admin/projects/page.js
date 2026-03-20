@@ -60,7 +60,7 @@ function ProjectModal({ open, onClose, selected, onSaved, toast }) {
           <Field label="Category" error={errors.category?.message} required>
             <select
               {...register('category')}
-              className="w-full bg-background border-2 border-card-border px-3 py-2 text-sm text-foreground outline-none focus:border-foreground transition-colors"
+              className="w-full bg-background border-2 border-dashed border-card-border px-3 py-2 text-sm text-foreground outline-none focus:border-foreground transition-colors"
             >
               {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
             </select>
@@ -79,7 +79,7 @@ function ProjectModal({ open, onClose, selected, onSaved, toast }) {
           <Textarea {...register('desc')} rows={3} placeholder="Short description of the project..." />
         </Field>
         {apiError && <p className="text-xs text-red-500 bg-red-500/10 px-3 py-2">{apiError}</p>}
-        <div className="flex justify-end gap-3 pt-2 border-t border-card-border">
+        <div className="flex justify-end gap-3 pt-2 border-t border-dashed border-card-border">
           <Btn variant="ghost" type="button" onClick={onClose} disabled={loading}>Cancel</Btn>
           <Btn type="submit" disabled={loading}>
             {loading && <Loader2 size={14} className="animate-spin" />}
@@ -151,7 +151,7 @@ export default function AdminProjectsPage() {
         </Btn>
       </div>
 
-      <div className="bg-card border-2 border-card-border">
+      <div className="bg-card border-2 border-dashed border-card-border">
         <Table
           columns={columns} data={projects} loading={loading}
           onEdit={(p) => { setSelected(p); setModalOpen(true); }}

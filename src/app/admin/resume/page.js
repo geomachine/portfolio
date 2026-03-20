@@ -107,10 +107,10 @@ export default function AdminResumePage() {
       </div>
 
       {/* Experience */}
-      <section className="bg-card border-2 border-card-border p-6 space-y-6">
-        <h2 className="font-signature font-bold text-lg text-foreground border-b border-card-border pb-2">Work Experience</h2>
+      <section className="bg-card border-2 border-dashed border-card-border p-6 space-y-6">
+        <h2 className="font-signature font-bold text-lg text-foreground border-b border-dashed border-card-border pb-2">Work Experience</h2>
         {data.experience.map((exp, i) => (
-          <div key={i} className="border border-card-border p-4 space-y-3 relative">
+          <div key={i} className="border border-dashed border-card-border p-4 space-y-3 relative">
             <button type="button" onClick={() => deleteItem('experience', i)} className="absolute top-3 right-3 text-muted hover:text-red-500 transition-colors"><Trash2 size={14} /></button>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <Field label="Job Title"><Input value={exp.title} onChange={e => setExp(i, 'title', e.target.value)} /></Field>
@@ -136,10 +136,10 @@ export default function AdminResumePage() {
       </section>
 
       {/* Infra Projects */}
-      <section className="bg-card border-2 border-card-border p-6 space-y-4">
-        <h2 className="font-signature font-bold text-lg text-foreground border-b border-card-border pb-2">Cloud & Infra Projects</h2>
+      <section className="bg-card border-2 border-dashed border-card-border p-6 space-y-4">
+        <h2 className="font-signature font-bold text-lg text-foreground border-b border-dashed border-card-border pb-2">Cloud & Infra Projects</h2>
         {data.infraProjects.map((proj, i) => (
-          <div key={i} className="border border-card-border p-4 space-y-3 relative">
+          <div key={i} className="border border-dashed border-card-border p-4 space-y-3 relative">
             <button type="button" onClick={() => deleteItem('infraProjects', i)} className="absolute top-3 right-3 text-muted hover:text-red-500 transition-colors"><Trash2 size={14} /></button>
             <div className="grid grid-cols-2 gap-3">
               <Field label="Title"><Input value={proj.title} onChange={e => setProj(i, 'title', e.target.value)} /></Field>
@@ -154,8 +154,8 @@ export default function AdminResumePage() {
       </section>
 
       {/* Skills */}
-      <section className="bg-card border-2 border-card-border p-6 space-y-4">
-        <h2 className="font-signature font-bold text-lg text-foreground border-b border-card-border pb-2">Skills</h2>
+      <section className="bg-card border-2 border-dashed border-card-border p-6 space-y-4">
+        <h2 className="font-signature font-bold text-lg text-foreground border-b border-dashed border-card-border pb-2">Skills</h2>
         {data.skills.map((group, i) => (
           <div key={i} className="grid grid-cols-[160px_1fr_auto] gap-3 items-end">
             <Field label={i === 0 ? 'Category' : undefined}>

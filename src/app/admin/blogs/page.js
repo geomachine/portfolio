@@ -74,7 +74,7 @@ function BlogModal({ open, onClose, selected, onSaved, toast }) {
           <Textarea {...register('content')} rows={10} placeholder="Full blog content (Markdown or HTML)..." />
         </Field>
         {apiError && <p className="text-xs text-red-500 bg-red-500/10 px-3 py-2">{apiError}</p>}
-        <div className="flex justify-end gap-3 pt-2 border-t border-card-border">
+        <div className="flex justify-end gap-3 pt-2 border-t border-dashed border-card-border">
           <Btn variant="ghost" type="button" onClick={onClose} disabled={loading}>Cancel</Btn>
           <Btn type="submit" disabled={loading}>
             {loading && <Loader2 size={14} className="animate-spin" />}
@@ -161,8 +161,8 @@ export default function AdminBlogsPage() {
         </Btn>
       </div>
 
-      <div className="bg-card border-2 border-card-border">
-        <div className="px-4 py-3 border-b-2 border-card-border">
+      <div className="bg-card border-2 border-dashed border-card-border">
+        <div className="px-4 py-3 border-b-2 border-dashed border-card-border">
           <SearchInput value={q} onChange={handleSearch} placeholder="Search by title, category, tag..." className="max-w-sm" />
         </div>
         <Table

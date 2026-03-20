@@ -20,7 +20,7 @@ export function Field({ label, error, required, children }) {
 export function Input({ className = '', ...props }) {
   return (
     <input
-      className={`w-full bg-background border-2 border-card-border px-3 py-2 text-sm text-foreground outline-none focus:border-foreground transition-colors placeholder:text-muted ${className}`}
+      className={`w-full bg-background border-2 border-dashed border-card-border px-3 py-2 text-sm text-foreground outline-none focus:border-foreground transition-colors placeholder:text-muted ${className}`}
       {...props}
     />
   );
@@ -29,7 +29,7 @@ export function Input({ className = '', ...props }) {
 export function Textarea({ className = '', ...props }) {
   return (
     <textarea
-      className={`w-full bg-background border-2 border-card-border px-3 py-2 text-sm text-foreground outline-none focus:border-foreground transition-colors placeholder:text-muted resize-none ${className}`}
+      className={`w-full bg-background border-2 border-dashed border-card-border px-3 py-2 text-sm text-foreground outline-none focus:border-foreground transition-colors placeholder:text-muted resize-none ${className}`}
       {...props}
     />
   );
@@ -71,7 +71,7 @@ export function SearchInput({ value, onChange, placeholder = 'Search...', classN
         value={value}
         onChange={e => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full bg-background border-2 border-card-border pl-9 pr-3 py-2 text-sm text-foreground outline-none focus:border-foreground transition-colors placeholder:text-muted"
+        className="w-full bg-background border-2 border-dashed border-card-border pl-9 pr-3 py-2 text-sm text-foreground outline-none focus:border-foreground transition-colors placeholder:text-muted"
       />
     </div>
   );
@@ -82,7 +82,7 @@ export function Pagination({ page, pages, onPage }) {
   const start = Math.max(1, Math.min(pages - 4, page - 2));
   const pageNums = Array.from({ length: Math.min(5, pages) }, (_, i) => start + i);
   return (
-    <div className="flex items-center justify-between px-4 py-3 border-t-2 border-card-border">
+    <div className="flex items-center justify-between px-4 py-3 border-t-2 border-dashed border-card-border">
       <span className="text-xs text-muted">Page {page} of {pages}</span>
       <div className="flex items-center gap-1">
         <button
@@ -144,8 +144,8 @@ export function Modal({ open, onClose, title, children, wide = false }) {
   if (!open) return null;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60">
-      <div className={`bg-card border-2 border-card-border w-full ${wide ? 'max-w-2xl' : 'max-w-lg'} max-h-[90vh] overflow-y-auto animate-[fadeIn_0.2s_ease_forwards]`}>
-        <div className="flex items-center justify-between px-6 py-4 border-b-2 border-card-border">
+      <div className={`bg-card border-2 border-dashed border-card-border w-full ${wide ? 'max-w-2xl' : 'max-w-lg'} max-h-[90vh] overflow-y-auto animate-[fadeIn_0.2s_ease_forwards]`}>
+        <div className="flex items-center justify-between px-6 py-4 border-b-2 border-dashed border-card-border">
           <h2 className="font-signature font-bold text-xl text-foreground">{title}</h2>
           <button onClick={onClose} className="text-muted hover:text-foreground transition-colors">
             <X size={18} />
@@ -161,7 +161,7 @@ export function ConfirmDialog({ open, onClose, onConfirm, loading, message }) {
   if (!open) return null;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60">
-      <div className="bg-card border-2 border-card-border w-full max-w-sm p-6">
+      <div className="bg-card border-2 border-dashed border-card-border w-full max-w-sm p-6">
         <h3 className="font-signature font-bold text-xl text-foreground mb-2">Are you sure?</h3>
         <p className="text-sm text-muted mb-6">{message || 'This action cannot be undone.'}</p>
         <div className="flex justify-end gap-3">
@@ -189,7 +189,7 @@ export function Table({ columns, data, onEdit, onDelete, loading, emptyText = 'N
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b-2 border-card-border bg-primary-light">
+          <tr className="border-b-2 border-dashed border-card-border bg-primary-light">
             {columns.map((col, i) => (
               <th key={i} className="text-left px-4 py-3 text-xs font-bold uppercase tracking-widest text-muted whitespace-nowrap">{col.header}</th>
             ))}
@@ -198,7 +198,7 @@ export function Table({ columns, data, onEdit, onDelete, loading, emptyText = 'N
         </thead>
         <tbody>
           {data.map((row, ri) => (
-            <tr key={ri} className="border-b border-card-border hover:bg-primary-light transition-colors">
+            <tr key={ri} className="border-b border-dashed border-card-border hover:bg-primary-light transition-colors">
               {columns.map((col, ci) => (
                 <td key={ci} className="px-4 py-3 text-foreground">
                   {col.render ? col.render(row[col.key], row) : (row[col.key] ?? '—')}

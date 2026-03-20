@@ -8,10 +8,10 @@ function StatCard({ label, value, sub, href, icon: Icon, loading }) {
   return (
     <Link
       href={href}
-      className="bg-card border-2 border-card-border p-5 hover:bg-primary-light hover:translate-x-0.5 hover:translate-y-0.5 transition-all duration-200 group block"
+      className="bg-card border-2 border-dashed border-card-border p-5 hover:bg-primary-light hover:translate-x-0.5 hover:translate-y-0.5 transition-all duration-200 group block"
     >
       <div className="flex items-start justify-between mb-4">
-        <div className="w-10 h-10 border-2 border-card-border flex items-center justify-center group-hover:border-foreground transition-colors">
+        <div className="w-10 h-10 border-2 border-dashed border-card-border flex items-center justify-center group-hover:border-foreground transition-colors">
           <Icon size={18} className="text-muted group-hover:text-foreground transition-colors" />
         </div>
         {loading
@@ -84,8 +84,8 @@ export default function AdminDashboard() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-card border-2 border-card-border p-5">
-          <h2 className="font-signature font-bold text-lg text-foreground mb-4 pb-3 border-b border-card-border">Quick Actions</h2>
+        <div className="bg-card border-2 border-dashed border-card-border p-5">
+          <h2 className="font-signature font-bold text-lg text-foreground mb-4 pb-3 border-b border-dashed border-card-border">Quick Actions</h2>
           <div className="space-y-2">
             {[
               { label: 'Write a new blog post', href: '/admin/blogs' },
@@ -104,8 +104,8 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="bg-card border-2 border-card-border p-5">
-          <h2 className="font-signature font-bold text-lg text-foreground mb-4 pb-3 border-b border-card-border">Overview</h2>
+        <div className="bg-card border-2 border-dashed border-card-border p-5">
+          <h2 className="font-signature font-bold text-lg text-foreground mb-4 pb-3 border-b border-dashed border-card-border">Overview</h2>
           <div className="space-y-3">
             <div className="flex items-center justify-between text-sm">
               <span className="text-muted">Total blog posts</span>

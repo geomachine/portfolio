@@ -41,8 +41,8 @@ export default function AdminNav() {
       <ThemeToggle />
 
       {/* Desktop sidebar */}
-      <aside className="hidden md:flex fixed top-0 left-0 h-full w-56 flex-col bg-card border-r-2 border-card-border z-40">
-        <div className="px-5 py-5 border-b-2 border-card-border">
+      <aside className="hidden md:flex fixed top-0 left-0 h-full w-56 flex-col bg-card border-r-2 border-dashed border-card-border z-40">
+        <div className="px-5 py-5 border-b-2 border-dashed border-card-border">
           <span className="font-signature font-bold text-xl text-foreground">Portfolio</span>
           <p className="text-[10px] text-muted uppercase tracking-widest mt-0.5">Admin Panel</p>
         </div>
@@ -64,7 +64,7 @@ export default function AdminNav() {
         </nav>
 
         {/* Sidebar footer */}
-        <div className="px-3 py-4 border-t-2 border-card-border space-y-1">
+        <div className="px-3 py-4 border-t-2 border-dashed border-card-border space-y-1">
           <Link
             href="/"
             className="flex items-center gap-3 px-3 py-2.5 w-full text-sm font-bold text-muted hover:text-foreground hover:bg-primary-light transition-colors"
@@ -86,7 +86,7 @@ export default function AdminNav() {
       </aside>
 
       {/* Mobile top bar */}
-      <header className="md:hidden fixed top-0 left-0 right-0 z-50 bg-card border-b-2 border-card-border h-14 flex items-center justify-between px-4">
+      <header className="md:hidden fixed top-0 left-0 right-0 z-50 bg-card border-b-2 border-dashed border-card-border h-14 flex items-center justify-between px-4">
         <span className="font-signature font-bold text-lg text-foreground">Portfolio Admin</span>
         <button onClick={() => setMobileOpen(!mobileOpen)} className="text-foreground p-1">
           {mobileOpen ? <X size={20} /> : <Menu size={20} />}

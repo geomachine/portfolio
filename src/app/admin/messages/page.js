@@ -108,7 +108,7 @@ export default function AdminMessagesPage() {
           {messages.map(msg => (
             <div
               key={msg._id}
-              className={`bg-card border-2 transition-all duration-200 ${!msg.read ? 'border-foreground' : 'border-card-border'}`}
+              className={`bg-card border-2 border-dashed transition-all duration-200 ${!msg.read ? 'border-foreground' : 'border-card-border'}`}
             >
               <div
                 className="flex items-start justify-between gap-4 px-5 py-4 cursor-pointer hover:bg-primary-light transition-colors"
@@ -142,7 +142,7 @@ export default function AdminMessagesPage() {
               </div>
 
               {expanded === msg._id && (
-                <div className="px-5 pb-5 border-t border-card-border pt-4">
+                <div className="px-5 pb-5 border-t border-dashed border-card-border pt-4">
                   <p className="text-sm text-foreground leading-relaxed whitespace-pre-wrap">{msg.message}</p>
                   <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-muted">
                     <span>From: {msg.fullname} &lt;{msg.email}&gt;</span>
