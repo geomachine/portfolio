@@ -1,8 +1,30 @@
 "use client";
 
+import { useState } from 'react';
+
 const ARTICLE = "active bg-card sketch-border paper-pattern p-6 lg:p-8 transition-all duration-500 relative z-10 block animate-[fadeIn_0.4s_ease_forwards]";
 
 export function Contact() {
+  const [status, setStatus] = useState('idle'); // idle | sending | sent | error
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('sending');
+    const form = e.target;
+    try {
+      const res = await fetch('/api/contacts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fullname: form.fullname.value,
+          email: form.email.value,
+          message: form.message.value,
+        }),
+      });
+      if (res.ok) { setStatus('sent'); form.reset(); }
+      else setStatus('error');
+    } catch { setStatus('error'); }
+  };
   return (
     <article className={ARTICLE}>
       <header className="mb-8">
@@ -26,18 +48,22 @@ export function Contact() {
         <h3 className="text-3xl lg:text-4xl font-signature font-bold mb-6 text-foreground flex items-center gap-3">
           <span className="text-2xl">✦</span> Get In Touch
         </h3>
-        <form action="#" className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <input type="text" name="fullname" className="w-full bg-background border-2 border-foreground sketch-border px-4 py-3 text-base text-foreground outline-none focus:bg-primary-light transition-all placeholder:text-muted focus:ring-2 focus:ring-foreground focus:ring-offset-2" placeholder="Full name" required />
             <input type="email" name="email" className="w-full bg-background border-2 border-foreground sketch-border px-4 py-3 text-base text-foreground outline-none focus:bg-primary-light transition-all placeholder:text-muted focus:ring-2 focus:ring-foreground focus:ring-offset-2" placeholder="Email address" required />
           </div>
           <textarea name="message" className="w-full bg-background border-2 border-foreground sketch-border px-4 py-4 text-base text-foreground outline-none focus:bg-primary-light transition-all min-h-[120px] placeholder:text-muted resize-none focus:ring-2 focus:ring-foreground focus:ring-offset-2" placeholder="Your Message" required />
+
+          {status === 'sent' && <p className="text-sm font-bold text-foreground bg-primary-light px-4 py-3 sketch-border">✓ Message sent! I&apos;ll get back to you soon.</p>}
+          {status === 'error' && <p className="text-sm font-bold text-red-500 bg-red-500/10 px-4 py-3 sketch-border">Something went wrong. Please try again.</p>}
+
           <div className="flex justify-end">
-            <button type="submit" className="bg-foreground text-background py-3 px-8 sketch-border font-signature font-bold text-2xl flex items-center gap-3 transition-all duration-300 hover:-translate-y-1 hover:scale-105 active:scale-95 group focus:outline-none focus:ring-2 focus:ring-foreground focus:ring-offset-2">
+            <button type="submit" disabled={status === 'sending'} className="bg-foreground text-background py-3 px-8 sketch-border font-signature font-bold text-2xl flex items-center gap-3 transition-all duration-300 hover:-translate-y-1 hover:scale-105 active:scale-95 group focus:outline-none focus:ring-2 focus:ring-foreground focus:ring-offset-2 disabled:opacity-60">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
               </svg>
-              Send Message
+              {status === 'sending' ? 'Sending...' : 'Send Message'}
             </button>
           </div>
         </form>
