@@ -88,7 +88,7 @@ html {
   --foreground: #0A0A0A;           /* Pure black - Maximum contrast */
   --sidebar-bg: #FAFAFA;
   --card-bg: #FFFFFF;
-  --card-border: #0A0A0A;
+  --card-border: #D4D4D4;
 
   /* Primary - Charcoal (main interactive elements) */
   --primary: #171717;              /* Dark gray - Professional */
@@ -134,7 +134,7 @@ html {
   --foreground: #FAFAFA;           /* Off-white - Strong contrast */
   --sidebar-bg: #171717;
   --card-bg: #171717;
-  --card-border: #FAFAFA;
+  --card-border: #404040;
 
   /* Primary - Light Gray (main interactive elements) */
   --primary: #E5E5E5;              /* Light gray - Clean */
