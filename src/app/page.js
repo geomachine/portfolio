@@ -333,7 +333,7 @@ export default function PortfolioPage() {
   };
 
   return (
-    <main className="w-full max-w-[1200px] mt-[30px] mx-auto flex flex-col gap-5 relative pb-[110px] lg:flex-row lg:items-start lg:mt-[60px] lg:pb-[60px] lg:gap-[25px]">
+    <main className="w-full max-w-[1200px] mt-[30px] mx-auto flex flex-col gap-5 relative pb-[80px] lg:flex-row lg:items-start lg:mt-[60px] lg:pb-[60px] lg:gap-[25px]">
       <Sidebar />
       <div className="flex-1 w-full relative min-h-0">
         <Navbar activePage={activePage} setActivePage={setActivePage} />

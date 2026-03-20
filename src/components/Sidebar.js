@@ -21,7 +21,7 @@ export function Sidebar() {
                 </div>
 
                 <button
-                    className="info_more-btn absolute -top-4 -right-4 lg:hidden sketch-border py-2 px-4 text-[12px] font-bold bg-primary text-white hover:bg-primary-hover hover:shadow-lg hover:shadow-primary/30 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                    className="info_more-btn absolute -top-4 -right-4 lg:hidden sketch-border py-2 px-4 text-[12px] font-bold bg-foreground text-background hover:opacity-80 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-foreground focus:ring-offset-2 active:scale-95"
                     onClick={() => setIsActive(!isActive)}
                 >
                     <span>{isActive ? 'Hide' : 'Show'} Contacts</span>
