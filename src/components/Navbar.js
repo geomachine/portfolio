@@ -16,7 +16,12 @@ export function Navbar({ activePage, setActivePage }) {
                                         ? 'text-foreground' 
                                         : 'text-muted hover:text-foreground'
                                 } focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 active:scale-95`}
-                                onClick={() => setActivePage(item.toLowerCase())}
+                                onClick={() => {
+                                    setActivePage(item.toLowerCase());
+                                    if (window.innerWidth < 1024) {
+                                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                                    }
+                                }}
                                 aria-current={isActive ? 'page' : undefined}
                             >
                                 <span className="relative z-10">{item}</span>
