@@ -98,13 +98,24 @@ function BlogDetail({ blog, onBack }) {
 
   return (
     <article className={ARTICLE}>
-      <button
-        onClick={onBack}
-        className="flex items-center gap-2 text-sm font-bold text-muted hover:text-foreground transition-colors duration-200 mb-8 group"
-      >
-        <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform duration-200" />
-        Back to Blog
-      </button>
+      <div className="flex items-center justify-between mb-8">
+        <button
+          onClick={onBack}
+          className="flex items-center gap-2 text-sm font-bold text-muted hover:text-foreground transition-colors duration-200 group"
+        >
+          <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform duration-200" />
+          Back to Blog
+        </button>
+        <a
+          href={`/blog/${full._id}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1.5 bg-foreground text-background px-3 py-1.5 sketch-border text-[11px] font-bold tracking-widest uppercase hover:bg-primary-hover active:scale-95 transition-all duration-200 whitespace-nowrap"
+        >
+          <ExternalLink size={11} />
+          Open in new tab
+        </a>
+      </div>
 
       {full.image && (
         <figure className="relative sketch-border overflow-hidden mb-8 aspect-[2/1]">

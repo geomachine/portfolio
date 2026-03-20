@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { Mail, Smartphone, MapPin } from "lucide-react";
 
 const STATIC = {
@@ -29,6 +30,7 @@ const LI_SVG = (
 export function Sidebar() {
   const [isActive, setIsActive] = useState(false);
   const [data, setData] = useState(STATIC);
+  const [resumeModal, setResumeModal] = useState(false);
 
   useEffect(() => {
     fetch('/api/about')
@@ -62,7 +64,8 @@ export function Sidebar() {
   ].filter(s => s.href);
 
   return (
-    <aside className={`bg-sidebar border-2 border-card-border sketch-border paper-pattern p-4 lg:p-6 transition-[max-height] duration-500 ease-in-out relative z-10 lg:sticky lg:top-[60px] lg:mb-0 lg:w-[280px] lg:shrink-0 lg:flex lg:flex-col lg:justify-center lg:max-h-[calc(100vh-120px)] lg:overflow-y-auto custom-scrollbar overflow-hidden ${isActive ? 'max-h-[800px]' : 'max-h-[110px]'}`}>
+    <>
+      <aside className={`bg-sidebar border-2 border-card-border sketch-border paper-pattern p-4 lg:p-6 transition-[max-height] duration-500 ease-in-out relative z-10 lg:sticky lg:top-[60px] lg:mb-0 lg:w-[280px] lg:shrink-0 lg:flex lg:flex-col lg:justify-center lg:max-h-[calc(100vh-120px)] lg:overflow-y-auto custom-scrollbar overflow-hidden ${isActive ? 'max-h-[800px]' : 'max-h-[110px]'}`}>
 
       {/* Top info */}
       <div className="sidebar-info flex items-center gap-[20px] relative lg:block lg:text-center">
@@ -98,18 +101,40 @@ export function Sidebar() {
         <div className="h-px bg-border my-6" />
 
         {/* Download Resume */}
-        <a
-          href="/resume.pdf"
-          download
+        <button
+          type="button"
+          onClick={() => setResumeModal(true)}
           className="flex items-center justify-center gap-2 w-full bg-foreground text-background py-3 px-4 sketch-border font-signature font-bold text-lg transition-all duration-300 hover:bg-primary-hover hover:scale-105 active:scale-95 mb-6 group focus:outline-none focus:ring-2 focus:ring-foreground focus:ring-offset-2 focus:ring-offset-sidebar"
         >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 group-hover:translate-y-1 transition-transform">
             <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
           </svg>
           Download Resume
-        </a>
+        </button>
 
-        {/* Contacts */}
+        {/* Resume unavailable modal */}
+        {resumeModal && (
+          <div
+            className="fixed inset-0 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm"
+            style={{ zIndex: 999999 }}
+            onClick={() => setResumeModal(false)}
+          >
+            <div
+              className="bg-card sketch-border paper-pattern max-w-sm w-full p-8 text-center space-y-4 animate-[fadeIn_0.2s_ease_forwards]"
+              onClick={e => e.stopPropagation()}
+            >
+              <div className="text-4xl">📄</div>
+              <h3 className="font-signature font-bold text-2xl text-foreground">Resume ain&apos;t available here</h3>
+              <p className="text-muted text-sm leading-relaxed">You gotta ask from me — reach out via email or LinkedIn and I&apos;ll send it over.</p>
+              <button
+                onClick={() => setResumeModal(false)}
+                className="mt-2 w-full bg-foreground text-background py-2.5 sketch-border font-bold text-sm tracking-widest uppercase hover:opacity-80 transition-opacity active:scale-95"
+              >
+                Got it
+              </button>
+            </div>
+          </div>
+        )}
         <ul className="contacts-list space-y-[20px]">
           {contacts.map((contact, idx) => (
             <li key={idx} className="contact-item flex items-center gap-3 group cursor-pointer">
@@ -184,5 +209,31 @@ export function Sidebar() {
 
       </div>
     </aside>
+
+      {/* Resume modal — portalled to body so it escapes overflow:hidden on aside */}
+      {resumeModal && createPortal(
+        <div
+          className="fixed inset-0 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm"
+          style={{ zIndex: 999999 }}
+          onClick={() => setResumeModal(false)}
+        >
+          <div
+            className="bg-card sketch-border paper-pattern max-w-sm w-full p-8 text-center space-y-4 animate-[fadeIn_0.2s_ease_forwards]"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="text-4xl">📄</div>
+            <h3 className="font-signature font-bold text-2xl text-foreground">Resume ain&apos;t available here</h3>
+            <p className="text-muted text-sm leading-relaxed">You gotta ask from me — reach out via email or LinkedIn and I&apos;ll send it over.</p>
+            <button
+              onClick={() => setResumeModal(false)}
+              className="mt-2 w-full bg-foreground text-background py-2.5 sketch-border font-bold text-sm tracking-widest uppercase hover:opacity-80 transition-opacity active:scale-95"
+            >
+              Got it
+            </button>
+          </div>
+        </div>,
+        document.body
+      )}
+    </>
   );
 }
