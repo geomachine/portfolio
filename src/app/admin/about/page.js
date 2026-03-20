@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { Loader2, Plus, Trash2 } from 'lucide-react';
 import { Btn, Field, Input, Textarea, useToast } from '@/components/admin/ui';
+import { ImageUpload } from '@/components/admin/ImageUpload';
 
 const DEFAULT = {
   name: 'Iqbal Hossain', title: 'Senior Software Engineer',
@@ -101,7 +102,9 @@ export default function AdminAboutPage() {
           <Field label="Full Name" required><Input value={data.name} onChange={e => set('name', e.target.value)} /></Field>
           <Field label="Title / Role" required><Input value={data.title} onChange={e => set('title', e.target.value)} /></Field>
         </div>
-        <Field label="Avatar URL"><Input value={data.avatar || ''} onChange={e => set('avatar', e.target.value)} placeholder="/astha.jpeg" /></Field>
+        <Field label="Avatar">
+          <ImageUpload value={data.avatar || ''} onChange={val => set('avatar', val)} folder="avatars" />
+        </Field>
       </section>
 
       {/* Bio */}

@@ -21,8 +21,8 @@ const caveat = Caveat({
 });
 
 export const metadata = {
-  title: "vCard - Personal Portfolio",
-  description: "A retro-themed personal portfolio built with Next.js",
+  title: "kraken - Personal Portfolio",
+  description: "THE Kraken's personalised portfolio nextjs application",
 };
 
 export default function RootLayout({ children }) {
