@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Loader2, Plus, Trash2 } from 'lucide-react';
 import { Btn, Field, Input, Textarea, useToast } from '@/components/admin/ui';
 
@@ -18,19 +18,25 @@ const DEFAULT_RESUME = {
 
 export default function AdminResumePage() {
   const [data, setData] = useState(DEFAULT_RESUME);
+  const dataRef = useRef(DEFAULT_RESUME);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const toast = useToast();
 
+  const setDataSync = (val) => {
+    dataRef.current = val;
+    setData(val);
+  };
+
   useEffect(() => {
     fetch('/api/resume').then(r => r.json()).then(j => {
-      if (j.data) setData(j.data);
+      if (j.data) setDataSync(j.data);
       setLoading(false);
     });
   }, []);
 
   const save = async (override) => {
-    const raw = override ?? data;
+    const raw = override ?? dataRef.current;
     // Sanitize: only keep plain serializable fields
     const payload = {
       experience: (raw.experience || []).map(e => ({
@@ -62,26 +68,26 @@ export default function AdminResumePage() {
 
   // Delete an item from a list key, persist immediately
   const deleteItem = (key, i) => {
-    const next = { ...data, [key]: data[key].filter((_, j) => j !== i) };
-    setData(next);
+    const next = { ...dataRef.current, [key]: dataRef.current[key].filter((_, j) => j !== i) };
+    setDataSync(next);
     save(next);
   };
 
   const setExp = (i, key, val) => {
-    const exp = [...data.experience]; exp[i] = { ...exp[i], [key]: val };
-    setData(d => ({ ...d, experience: exp }));
+    const exp = [...dataRef.current.experience]; exp[i] = { ...exp[i], [key]: val };
+    setDataSync({ ...dataRef.current, experience: exp });
   };
   const setPoint = (ei, pi, val) => {
-    const exp = [...data.experience]; const pts = [...exp[ei].points]; pts[pi] = val;
-    exp[ei] = { ...exp[ei], points: pts }; setData(d => ({ ...d, experience: exp }));
+    const exp = [...dataRef.current.experience]; const pts = [...exp[ei].points]; pts[pi] = val;
+    exp[ei] = { ...exp[ei], points: pts }; setDataSync({ ...dataRef.current, experience: exp });
   };
   const setProj = (i, key, val) => {
-    const proj = [...data.infraProjects]; proj[i] = { ...proj[i], [key]: val };
-    setData(d => ({ ...d, infraProjects: proj }));
+    const proj = [...dataRef.current.infraProjects]; proj[i] = { ...proj[i], [key]: val };
+    setDataSync({ ...dataRef.current, infraProjects: proj });
   };
   const setSkill = (i, key, val) => {
-    const skills = [...data.skills]; skills[i] = { ...skills[i], [key]: val };
-    setData(d => ({ ...d, skills }));
+    const skills = [...dataRef.current.skills]; skills[i] = { ...skills[i], [key]: val };
+    setDataSync({ ...dataRef.current, skills });
   };
 
   if (loading) return <div className="py-16 text-center text-muted"><Loader2 size={24} className="animate-spin mx-auto" /></div>;
@@ -94,7 +100,7 @@ export default function AdminResumePage() {
           <h1 className="text-3xl font-signature font-bold text-foreground">Resume</h1>
           <p className="text-sm text-muted">Experience, projects & skills.</p>
         </div>
-        <Btn onClick={save} disabled={saving}>
+        <Btn onClick={() => save()} disabled={saving}>
           {saving && <Loader2 size={14} className="animate-spin" />}
           Save Changes
         </Btn>
@@ -124,7 +130,7 @@ export default function AdminResumePage() {
             </Field>
           </div>
         ))}
-        <Btn variant="ghost" onClick={() => setData(d => ({ ...d, experience: [...d.experience, { title: '', company: '', period: '', points: [''] }] }))}>
+        <Btn variant="ghost" onClick={() => setDataSync({ ...dataRef.current, experience: [...dataRef.current.experience, { title: '', company: '', period: '', points: [''] }] })}>
           <Plus size={14} /> Add Experience
         </Btn>
       </section>
@@ -142,7 +148,7 @@ export default function AdminResumePage() {
             <Field label="Description"><Textarea value={proj.text} rows={2} onChange={e => setProj(i, 'text', e.target.value)} /></Field>
           </div>
         ))}
-        <Btn variant="ghost" onClick={() => setData(d => ({ ...d, infraProjects: [...d.infraProjects, { title: '', period: '', text: '' }] }))}>
+        <Btn variant="ghost" onClick={() => setDataSync({ ...dataRef.current, infraProjects: [...dataRef.current.infraProjects, { title: '', period: '', text: '' }] })}>
           <Plus size={14} /> Add Project
         </Btn>
       </section>
@@ -161,7 +167,7 @@ export default function AdminResumePage() {
             <button type="button" onClick={() => deleteItem('skills', i)} className="text-muted hover:text-red-500 transition-colors mb-2 shrink-0"><Trash2 size={14} /></button>
           </div>
         ))}
-        <Btn variant="ghost" onClick={() => setData(d => ({ ...d, skills: [...d.skills, { category: '', tags: [] }] }))}>
+        <Btn variant="ghost" onClick={() => setDataSync({ ...dataRef.current, skills: [...dataRef.current.skills, { category: '', tags: [] }] })}>
           <Plus size={14} /> Add Skill Group
         </Btn>
       </section>

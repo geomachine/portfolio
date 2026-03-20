@@ -96,9 +96,14 @@ const RESUME_SEED = {
 };
 
 export async function seedAbout() {
-  // Replace any empty/stub doc with real seed data
   const existing = await About.findOne().lean();
-  if (!existing || !existing.bio?.length) {
+  // Only seed if truly empty — no doc at all, or missing all key fields
+  const isEmpty = !existing || (
+    !existing.services?.length &&
+    !existing.techStack?.length &&
+    !existing.bio?.length
+  );
+  if (isEmpty) {
     await About.deleteMany({});
     await About.create(ABOUT_SEED);
   }
@@ -106,7 +111,11 @@ export async function seedAbout() {
 
 export async function seedResume() {
   const existing = await Resume.findOne().lean();
-  if (!existing || !existing.experience?.length) {
+  const isEmpty = !existing || (
+    !existing.experience?.length &&
+    !existing.skills?.length
+  );
+  if (isEmpty) {
     await Resume.deleteMany({});
     await Resume.create(RESUME_SEED);
   }

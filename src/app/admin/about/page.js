@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Loader2, Plus, Trash2 } from 'lucide-react';
 import { Btn, Field, Input, Textarea, useToast } from '@/components/admin/ui';
 
@@ -22,19 +22,25 @@ const DEFAULT = {
 
 export default function AdminAboutPage() {
   const [data, setData] = useState(DEFAULT);
+  const dataRef = useRef(DEFAULT);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const toast = useToast();
 
+  const setDataSync = (val) => {
+    dataRef.current = val;
+    setData(val);
+  };
+
   useEffect(() => {
     fetch('/api/about').then(r => r.json()).then(j => {
-      if (j.data) setData(j.data);
+      if (j.data) setDataSync(j.data);
       setLoading(false);
     });
   }, []);
 
   const save = async (override) => {
-    const raw = override ?? data;
+    const raw = override ?? dataRef.current;
     const payload = {
       name: raw.name || '',
       title: raw.title || '',
@@ -64,11 +70,11 @@ export default function AdminAboutPage() {
     else toast.show('Failed to save.', 'error');
   };
 
-  const set = (key, val) => setData(d => ({ ...d, [key]: val }));
+  const set = (key, val) => setDataSync({ ...dataRef.current, [key]: val });
 
   const deleteItem = (key, i) => {
-    const next = { ...data, [key]: data[key].filter((_, j) => j !== i) };
-    setData(next);
+    const next = { ...dataRef.current, [key]: dataRef.current[key].filter((_, j) => j !== i) };
+    setDataSync(next);
     save(next);
   };
 
@@ -82,7 +88,7 @@ export default function AdminAboutPage() {
           <h1 className="text-3xl font-signature font-bold text-foreground">About</h1>
           <p className="text-sm text-muted">Profile, contact info, services & tech stack.</p>
         </div>
-        <Btn onClick={save} disabled={saving}>
+        <Btn onClick={() => save()} disabled={saving}>
           {saving && <Loader2 size={14} className="animate-spin" />}
           Save Changes
         </Btn>
