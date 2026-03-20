@@ -25,7 +25,8 @@ export function ThemeToggle() {
     const getSize = () => ({ w: btnRef.current?.offsetWidth ?? 64, h: btnRef.current?.offsetHeight ?? 32 });
 
     const snapToSide = (currentX, currentY) => {
-        const { w, h } = getSize();
+        const w = btnRef.current?.offsetWidth ?? 64;
+        const h = btnRef.current?.offsetHeight ?? 32;
         const midX = window.innerWidth / 2;
         const snappedX = currentX + w / 2 < midX ? 12 : window.innerWidth - w - 12;
         const clampedY = Math.min(Math.max(currentY, 12), window.innerHeight - h - 12);
@@ -49,7 +50,8 @@ export function ThemeToggle() {
         const dx = e.clientX - dragStart.current.startX;
         const dy = e.clientY - dragStart.current.startY;
         if (Math.abs(dx) > 4 || Math.abs(dy) > 4) dragStart.current.moved = true;
-        const { w, h } = getSize();
+        const w = btnRef.current?.offsetWidth ?? 64;
+        const h = btnRef.current?.offsetHeight ?? 32;
         setPos({
             x: Math.min(Math.max(dragStart.current.originX + dx, 0), window.innerWidth - w),
             y: Math.min(Math.max(dragStart.current.originY + dy, 0), window.innerHeight - h),
