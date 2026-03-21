@@ -1,76 +1,143 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>kraken — Portfolio Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --bg: #0a0a0a;
+      --fg: #fafafa;
+      --card: #171717;
+      --border-mid: #404040;
+      --muted: #737373;
+      --muted-light: #a3a3a3;
+      --dot-color: #333333;
+    }
+
+    [data-theme="light"] {
+      --bg: #ffffff;
+      --fg: #0a0a0a;
+      --card: #ffffff;
+      --border-mid: #d4d4d4;
+      --muted: #a3a3a3;
+      --muted-light: #525252;
+      --dot-color: #d4d4d4;
+    }
+
+    html { font-size: 14px; scroll-behavior: smooth; }
+
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #0a0a0a;
-      color: #fafafa;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 300;
+      background-color: var(--bg);
+      background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
+      background-size: 24px 24px;
+      color: var(--fg);
       min-height: 100vh;
-      padding: 48px 24px;
+      padding: 56px 24px 80px;
+      transition: background-color 0.4s, color 0.4s;
     }
 
-    h1 {
+    header {
       text-align: center;
-      font-size: 1.6rem;
-      font-weight: 500;
-      letter-spacing: -0.02em;
-      margin-bottom: 6px;
+      margin-bottom: 64px;
     }
 
-    .subtitle {
-      text-align: center;
-      color: #737373;
-      font-size: 0.85rem;
-      margin-bottom: 56px;
+    header h1 {
+      font-family: 'Caveat', cursive;
+      font-size: 2.8rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--fg);
+      margin-bottom: 8px;
     }
 
-    .subtitle a {
-      color: #a3a3a3;
+    header p {
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    header p a {
+      color: var(--muted-light);
       text-decoration: none;
-      border-bottom: 1px dashed #525252;
+      border-bottom: 1px dashed var(--border-mid);
+      transition: color 0.2s;
     }
 
-    .subtitle a:hover { color: #fafafa; }
+    header p a:hover { color: var(--fg); }
+
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      border: 2px dashed var(--border-mid);
+      overflow: hidden;
+      margin-top: 20px;
+    }
+
+    .theme-toggle button {
+      background: none;
+      border: none;
+      padding: 6px 18px;
+      font-size: 0.7rem;
+      font-family: inherit;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .theme-toggle button.active {
+      background: var(--fg);
+      color: var(--bg);
+    }
 
     .section-label {
-      text-align: center;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      max-width: 860px;
+      margin: 0 auto 20px;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: #525252;
-      margin-bottom: 16px;
+      color: var(--muted);
     }
 
-    /* Slideshow */
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      border-top: 1px dashed var(--border-mid);
+    }
+
     .slideshow {
-      position: relative;
-      max-width: 900px;
-      margin: 0 auto 64px;
-      background: #171717;
-      border: 1px dashed #262626;
+      max-width: 860px;
+      margin: 0 auto 72px;
+      border: 2px dashed var(--border-mid);
+      background: var(--card);
     }
 
     .slides {
       position: relative;
       overflow: hidden;
-      aspect-ratio: 16/9;
+      aspect-ratio: 16 / 9;
+      background: var(--card);
     }
 
     .slide {
       position: absolute;
       inset: 0;
       opacity: 0;
-      transition: opacity 0.5s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      transition: opacity 0.45s ease;
     }
 
     .slide.active { opacity: 1; }
@@ -78,207 +145,193 @@
     .slide img {
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
       display: block;
     }
 
     .slide-caption {
       position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 8px 14px;
-      background: rgba(0,0,0,0.6);
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #a3a3a3;
+      bottom: 0; left: 0; right: 0;
+      padding: 7px 14px;
+      background: rgba(10, 10, 10, 0.72);
+      backdrop-filter: blur(4px);
       display: flex;
       align-items: center;
       gap: 8px;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted-light);
     }
 
-    .slide-caption .mode {
-      font-size: 0.6rem;
-      padding: 2px 6px;
-      border: 1px dashed #404040;
-      color: #737373;
+    .slide-caption .badge {
+      font-size: 0.55rem;
+      padding: 2px 7px;
+      border: 1px dashed var(--border-mid);
+      color: var(--muted);
+      letter-spacing: 0.1em;
     }
 
-    /* Controls */
     .controls {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 16px;
-      border-top: 1px dashed #262626;
+      padding: 10px 14px;
+      border-top: 2px dashed var(--border-mid);
+      gap: 12px;
     }
 
     .btn {
       background: none;
-      border: 1px dashed #404040;
-      color: #a3a3a3;
-      padding: 6px 16px;
-      font-size: 0.75rem;
+      border: 1px dashed var(--border-mid);
+      color: var(--muted-light);
+      padding: 5px 14px;
+      font-size: 0.65rem;
+      font-family: inherit;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       cursor: pointer;
-      letter-spacing: 0.05em;
       transition: all 0.2s;
+      white-space: nowrap;
     }
 
-    .btn:hover { border-color: #fafafa; color: #fafafa; }
+    .btn:hover:not(:disabled) { border-color: var(--fg); color: var(--fg); }
     .btn:disabled { opacity: 0.2; cursor: default; }
 
     .dots {
       display: flex;
-      gap: 6px;
+      gap: 5px;
       align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
     .dot {
-      width: 6px;
-      height: 6px;
-      background: #404040;
+      width: 5px;
+      height: 5px;
+      background: var(--border-mid);
       border: none;
       cursor: pointer;
-      transition: background 0.2s;
       padding: 0;
+      transition: all 0.2s;
+      flex-shrink: 0;
     }
 
-    .dot.active { background: #fafafa; width: 18px; }
+    .dot.active { background: var(--fg); width: 16px; }
 
     .counter {
-      font-size: 0.7rem;
-      color: #525252;
-      letter-spacing: 0.05em;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      white-space: nowrap;
     }
 
-    /* Theme toggle for slides */
-    .theme-tabs {
-      display: flex;
-      justify-content: center;
-      gap: 0;
-      margin-bottom: 0;
-      border-bottom: 1px dashed #262626;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .theme-tab {
-      flex: 1;
-      padding: 8px;
-      background: none;
-      border: none;
-      color: #525252;
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.2s;
-      border-bottom: 2px solid transparent;
-    }
-
-    .theme-tab.active {
-      color: #fafafa;
-      border-bottom-color: #fafafa;
-      background: #171717;
-    }
-
-    .cta {
+    footer {
       text-align: center;
       margin-top: 16px;
     }
 
-    .cta a {
+    footer a {
       display: inline-block;
-      border: 1px dashed #404040;
-      color: #a3a3a3;
-      padding: 10px 28px;
-      font-size: 0.8rem;
-      letter-spacing: 0.08em;
+      border: 2px dashed var(--border-mid);
+      color: var(--muted-light);
+      padding: 10px 32px;
+      font-family: 'Caveat', cursive;
+      font-size: 1.1rem;
+      letter-spacing: 0.04em;
       text-decoration: none;
-      text-transform: uppercase;
       transition: all 0.2s;
     }
 
-    .cta a:hover { border-color: #fafafa; color: #fafafa; }
+    footer a:hover { border-color: var(--fg); color: var(--fg); }
   </style>
 </head>
 <body>
 
-  <h1>kraken — Portfolio Preview</h1>
-  <p class="subtitle">
-    A full-stack self-hosted portfolio built with Next.js 16 &nbsp;·&nbsp;
-    <a href="https://github.com/geomachine/portfolio">View on GitHub →</a>
-  </p>
+  <header>
+    <h1>kraken — portfolio</h1>
+    <p>
+      Full-stack self-hosted portfolio &nbsp;&middot;&nbsp;
+      <a href="https://github.com/geomachine/portfolio" target="_blank">github.com/geomachine/portfolio</a>
+    </p>
+    <div class="theme-toggle">
+      <button class="active" onclick="setTheme('dark')">&#127761; Dark</button>
+      <button onclick="setTheme('light')">&#9728;&#65039; Light</button>
+    </div>
+  </header>
 
-  <!-- MAIN PORTFOLIO SLIDESHOW -->
-  <p class="section-label">Main Portfolio</p>
-
+  <p class="section-label"><span>&#10022;</span> Main Portfolio</p>
   <div class="slideshow" id="portfolio-show">
     <div class="slides">
-      <div class="slide active"><img src="./main-portfolio/dark/about.png" /><div class="slide-caption">About <span class="mode">dark</span></div></div>
-      <div class="slide"><img src="./main-portfolio/light/about.png" /><div class="slide-caption">About <span class="mode">light</span></div></div>
-      <div class="slide"><img src="./main-portfolio/dark/resume.png" /><div class="slide-caption">Resume <span class="mode">dark</span></div></div>
-      <div class="slide"><img src="./main-portfolio/light/resume.png" /><div class="slide-caption">Resume <span class="mode">light</span></div></div>
-      <div class="slide"><img src="./main-portfolio/dark/portfolio.png" /><div class="slide-caption">Portfolio <span class="mode">dark</span></div></div>
-      <div class="slide"><img src="./main-portfolio/light/portfolio.png" /><div class="slide-caption">Portfolio <span class="mode">light</span></div></div>
-      <div class="slide"><img src="./main-portfolio/dark/blog.png" /><div class="slide-caption">Blog <span class="mode">dark</span></div></div>
-      <div class="slide"><img src="./main-portfolio/light/blog.png" /><div class="slide-caption">Blog <span class="mode">light</span></div></div>
-      <div class="slide"><img src="./main-portfolio/dark/contact.png" /><div class="slide-caption">Contact <span class="mode">dark</span></div></div>
-      <div class="slide"><img src="./main-portfolio/light/contact.png" /><div class="slide-caption">Contact <span class="mode">light</span></div></div>
+      <div class="slide active"><img src="./main-portfolio/dark/about.png" alt="About Dark" /><div class="slide-caption">About <span class="badge">dark</span></div></div>
+      <div class="slide"><img src="./main-portfolio/light/about.png" alt="About Light" /><div class="slide-caption">About <span class="badge">light</span></div></div>
+      <div class="slide"><img src="./main-portfolio/dark/resume.png" alt="Resume Dark" /><div class="slide-caption">Resume <span class="badge">dark</span></div></div>
+      <div class="slide"><img src="./main-portfolio/light/resume.png" alt="Resume Light" /><div class="slide-caption">Resume <span class="badge">light</span></div></div>
+      <div class="slide"><img src="./main-portfolio/dark/portfolio.png" alt="Portfolio Dark" /><div class="slide-caption">Portfolio <span class="badge">dark</span></div></div>
+      <div class="slide"><img src="./main-portfolio/light/portfolio.png" alt="Portfolio Light" /><div class="slide-caption">Portfolio <span class="badge">light</span></div></div>
+      <div class="slide"><img src="./main-portfolio/dark/blog.png" alt="Blog Dark" /><div class="slide-caption">Blog <span class="badge">dark</span></div></div>
+      <div class="slide"><img src="./main-portfolio/light/blog.png" alt="Blog Light" /><div class="slide-caption">Blog <span class="badge">light</span></div></div>
+      <div class="slide"><img src="./main-portfolio/dark/contact.png" alt="Contact Dark" /><div class="slide-caption">Contact <span class="badge">dark</span></div></div>
+      <div class="slide"><img src="./main-portfolio/light/contact.png" alt="Contact Light" /><div class="slide-caption">Contact <span class="badge">light</span></div></div>
     </div>
     <div class="controls">
-      <button class="btn prev">← Prev</button>
+      <button class="btn prev">&#8592; prev</button>
       <div class="dots"></div>
       <span class="counter"></span>
-      <button class="btn next">Next →</button>
+      <button class="btn next">next &#8594;</button>
     </div>
   </div>
 
-  <!-- ADMIN SLIDESHOW -->
-  <p class="section-label">Admin Panel</p>
-
+  <p class="section-label"><span>&#10022;</span> Admin Panel</p>
   <div class="slideshow" id="admin-show">
     <div class="slides">
-      <div class="slide active"><img src="./admin/dark/dashboard.png" /><div class="slide-caption">Dashboard <span class="mode">dark</span></div></div>
-      <div class="slide"><img src="./admin/light/dashboard.png" /><div class="slide-caption">Dashboard <span class="mode">light</span></div></div>
-      <div class="slide"><img src="./admin/dark/about.png" /><div class="slide-caption">About <span class="mode">dark</span></div></div>
-      <div class="slide"><img src="./admin/light/about.png" /><div class="slide-caption">About <span class="mode">light</span></div></div>
-      <div class="slide"><img src="./admin/dark/blogs.png" /><div class="slide-caption">Blogs <span class="mode">dark</span></div></div>
-      <div class="slide"><img src="./admin/light/blogs.png" /><div class="slide-caption">Blogs <span class="mode">light</span></div></div>
-      <div class="slide"><img src="./admin/dark/projects.png" /><div class="slide-caption">Projects <span class="mode">dark</span></div></div>
-      <div class="slide"><img src="./admin/light/projects.png" /><div class="slide-caption">Projects <span class="mode">light</span></div></div>
-      <div class="slide"><img src="./admin/dark/resume.png" /><div class="slide-caption">Resume <span class="mode">dark</span></div></div>
-      <div class="slide"><img src="./admin/light/resume.png" /><div class="slide-caption">Resume <span class="mode">light</span></div></div>
-      <div class="slide"><img src="./admin/dark/messages.png" /><div class="slide-caption">Messages <span class="mode">dark</span></div></div>
-      <div class="slide"><img src="./admin/light/messages.png" /><div class="slide-caption">Messages <span class="mode">light</span></div></div>
+      <div class="slide active"><img src="./admin/dark/dashboard.png" alt="Dashboard Dark" /><div class="slide-caption">Dashboard <span class="badge">dark</span></div></div>
+      <div class="slide"><img src="./admin/light/dashboard.png" alt="Dashboard Light" /><div class="slide-caption">Dashboard <span class="badge">light</span></div></div>
+      <div class="slide"><img src="./admin/dark/about.png" alt="About Dark" /><div class="slide-caption">About <span class="badge">dark</span></div></div>
+      <div class="slide"><img src="./admin/light/about.png" alt="About Light" /><div class="slide-caption">About <span class="badge">light</span></div></div>
+      <div class="slide"><img src="./admin/dark/blogs.png" alt="Blogs Dark" /><div class="slide-caption">Blogs <span class="badge">dark</span></div></div>
+      <div class="slide"><img src="./admin/light/blogs.png" alt="Blogs Light" /><div class="slide-caption">Blogs <span class="badge">light</span></div></div>
+      <div class="slide"><img src="./admin/dark/projects.png" alt="Projects Dark" /><div class="slide-caption">Projects <span class="badge">dark</span></div></div>
+      <div class="slide"><img src="./admin/light/projects.png" alt="Projects Light" /><div class="slide-caption">Projects <span class="badge">light</span></div></div>
+      <div class="slide"><img src="./admin/dark/resume.png" alt="Resume Dark" /><div class="slide-caption">Resume <span class="badge">dark</span></div></div>
+      <div class="slide"><img src="./admin/light/resume.png" alt="Resume Light" /><div class="slide-caption">Resume <span class="badge">light</span></div></div>
+      <div class="slide"><img src="./admin/dark/messages.png" alt="Messages Dark" /><div class="slide-caption">Messages <span class="badge">dark</span></div></div>
+      <div class="slide"><img src="./admin/light/messages.png" alt="Messages Light" /><div class="slide-caption">Messages <span class="badge">light</span></div></div>
     </div>
     <div class="controls">
-      <button class="btn prev">← Prev</button>
+      <button class="btn prev">&#8592; prev</button>
       <div class="dots"></div>
       <span class="counter"></span>
-      <button class="btn next">Next →</button>
+      <button class="btn next">next &#8594;</button>
     </div>
   </div>
 
-  <div class="cta">
-    <a href="https://github.com/geomachine/portfolio">Use this template on GitHub →</a>
-  </div>
+  <footer>
+    <a href="https://github.com/geomachine/portfolio" target="_blank">use this template &#8594;</a>
+  </footer>
 
   <script>
-    function initSlideshow(el) {
-      const slides = [...el.querySelectorAll('.slide')];
-      const dotsEl = el.querySelector('.dots');
-      const counter = el.querySelector('.counter');
-      const prevBtn = el.querySelector('.prev');
-      const nextBtn = el.querySelector('.next');
-      let current = 0;
+    function setTheme(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      document.querySelectorAll('.theme-toggle button').forEach(function(b, i) {
+        b.classList.toggle('active', (i === 0 && t === 'dark') || (i === 1 && t === 'light'));
+      });
+    }
 
-      // build dots
-      slides.forEach((_, i) => {
-        const d = document.createElement('button');
+    function initSlideshow(el) {
+      var slides = Array.from(el.querySelectorAll('.slide'));
+      var dotsEl = el.querySelector('.dots');
+      var counter = el.querySelector('.counter');
+      var prevBtn = el.querySelector('.prev');
+      var nextBtn = el.querySelector('.next');
+      var current = 0;
+      var timer;
+
+      slides.forEach(function(_, i) {
+        var d = document.createElement('button');
         d.className = 'dot' + (i === 0 ? ' active' : '');
-        d.addEventListener('click', () => goTo(i));
+        d.setAttribute('aria-label', 'Slide ' + (i + 1));
+        d.addEventListener('click', function() { goTo(i); resetTimer(); });
         dotsEl.appendChild(d);
       });
 
@@ -288,18 +341,21 @@
         current = (n + slides.length) % slides.length;
         slides[current].classList.add('active');
         dotsEl.children[current].classList.add('active');
-        counter.textContent = `${current + 1} / ${slides.length}`;
-        prevBtn.disabled = false;
-        nextBtn.disabled = false;
+        counter.textContent = (current + 1) + ' / ' + slides.length;
       }
 
-      prevBtn.addEventListener('click', () => goTo(current - 1));
-      nextBtn.addEventListener('click', () => goTo(current + 1));
+      function resetTimer() {
+        clearInterval(timer);
+        timer = setInterval(function() { goTo(current + 1); }, 4000);
+      }
 
-      // auto-advance every 4s
-      setInterval(() => goTo(current + 1), 4000);
+      prevBtn.addEventListener('click', function() { goTo(current - 1); resetTimer(); });
+      nextBtn.addEventListener('click', function() { goTo(current + 1); resetTimer(); });
+      el.addEventListener('mouseenter', function() { clearInterval(timer); });
+      el.addEventListener('mouseleave', resetTimer);
 
       goTo(0);
+      resetTimer();
     }
 
     document.querySelectorAll('.slideshow').forEach(initSlideshow);
