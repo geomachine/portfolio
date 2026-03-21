@@ -6,6 +6,72 @@ A full-stack, self-hosted personal portfolio built with Next.js 16. Fully dynami
 
 ---
 
+## Preview
+
+### Portfolio — Dark & Light
+
+<table>
+  <tr>
+    <th align="center">🌑 Dark</th>
+    <th align="center">☀️ Light</th>
+  </tr>
+  <tr>
+    <td><img src="portfolio/main-portfolio/dark/about.png" alt="About Dark" /></td>
+    <td><img src="portfolio/main-portfolio/light/about.png" alt="About Light" /></td>
+  </tr>
+  <tr>
+    <td><img src="portfolio/main-portfolio/dark/resume.png" alt="Resume Dark" /></td>
+    <td><img src="portfolio/main-portfolio/light/resume.png" alt="Resume Light" /></td>
+  </tr>
+  <tr>
+    <td><img src="portfolio/main-portfolio/dark/portfolio.png" alt="Portfolio Dark" /></td>
+    <td><img src="portfolio/main-portfolio/light/portfolio.png" alt="Portfolio Light" /></td>
+  </tr>
+  <tr>
+    <td><img src="portfolio/main-portfolio/dark/blog.png" alt="Blog Dark" /></td>
+    <td><img src="portfolio/main-portfolio/light/blog.png" alt="Blog Light" /></td>
+  </tr>
+  <tr>
+    <td><img src="portfolio/main-portfolio/dark/contact.png" alt="Contact Dark" /></td>
+    <td><img src="portfolio/main-portfolio/light/contact.png" alt="Contact Light" /></td>
+  </tr>
+</table>
+
+### Admin Panel — Dark & Light
+
+<table>
+  <tr>
+    <th align="center">🌑 Dark</th>
+    <th align="center">☀️ Light</th>
+  </tr>
+  <tr>
+    <td><img src="portfolio/admin/dark/dashboard.png" alt="Dashboard Dark" /></td>
+    <td><img src="portfolio/admin/light/dashboard.png" alt="Dashboard Light" /></td>
+  </tr>
+  <tr>
+    <td><img src="portfolio/admin/dark/about.png" alt="About Dark" /></td>
+    <td><img src="portfolio/admin/light/about.png" alt="About Light" /></td>
+  </tr>
+  <tr>
+    <td><img src="portfolio/admin/dark/blogs.png" alt="Blogs Dark" /></td>
+    <td><img src="portfolio/admin/light/blogs.png" alt="Blogs Light" /></td>
+  </tr>
+  <tr>
+    <td><img src="portfolio/admin/dark/projects.png" alt="Projects Dark" /></td>
+    <td><img src="portfolio/admin/light/projects.png" alt="Projects Light" /></td>
+  </tr>
+  <tr>
+    <td><img src="portfolio/admin/dark/resume.png" alt="Resume Dark" /></td>
+    <td><img src="portfolio/admin/light/resume.png" alt="Resume Light" /></td>
+  </tr>
+  <tr>
+    <td><img src="portfolio/admin/dark/messages.png" alt="Messages Dark" /></td>
+    <td><img src="portfolio/admin/light/messages.png" alt="Messages Light" /></td>
+  </tr>
+</table>
+
+---
+
 ## Features
 
 - **Dynamic content** — all sections (about, resume, projects, blog, contact) are managed via a built-in admin panel and stored in MongoDB
