@@ -8,7 +8,7 @@ A full-stack, self-hosted personal portfolio built with Next.js 16. Fully dynami
 
 ## Preview
 
-> **[→ View interactive slideshow](https://geomachine.github.io/portfolio/)** — portfolio sections and admin panel, dark & light.
+> **[→ View interactive slideshow](https://nesohq.github.io/kraken-portfolio/)** — portfolio sections and admin panel, dark & light.
 
 ---
 
